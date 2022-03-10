@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "b4645ace-822c-4a78-abbd-5c5a220f9886": {
+      "ProjectGuid": "b4645ace-822c-4a78-abbd-5c5a220f9886",
+      "DisplayName": "MovieBase.Core",
+      "ColorIndex": 0
+    },
+    "d3e68a41-77e2-4426-88bd-a834cf479172": {
+      "ProjectGuid": "d3e68a41-77e2-4426-88bd-a834cf479172",
+      "DisplayName": "MovieBase.Application",
+      "ColorIndex": 1
+    },
+    "51c3407e-acaf-4770-977e-3622ecbbf39c": {
+      "ProjectGuid": "51c3407e-acaf-4770-977e-3622ecbbf39c",
+      "DisplayName": "MovieBase.Infrastructure",
+      "ColorIndex": 2
+    },
+    "e5f8c445-a929-4a4c-a79a-1ac929e9c5bf": {
+      "ProjectGuid": "e5f8c445-a929-4a4c-a79a-1ac929e9c5bf",
+      "DisplayName": "MovieBase.API",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}
