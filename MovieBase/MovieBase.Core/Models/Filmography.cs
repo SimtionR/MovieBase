@@ -9,7 +9,7 @@ namespace MovieBase.Core.Models
     public class Filmography
     {
         public int Id { get; set; }
-        public int CerwMemberId { get; set; }
+        public int MovieStarId { get; set; }
         public List<Movie> Actor { get; set; }
         public List<Movie> Director { get; set; }
         public List<Movie> Soundtrack { get; set; }

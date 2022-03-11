@@ -20,7 +20,17 @@
       "ProjectGuid": "e5f8c445-a929-4a4c-a79a-1ac929e9c5bf",
       "DisplayName": "MovieBase.API",
       "ColorIndex": 3
+    },
+    "97418d1b-ae0d-4822-8a57-d4cb6dbc88e0": {
+      "ProjectGuid": "97418d1b-ae0d-4822-8a57-d4cb6dbc88e0",
+      "DisplayName": "MovieBase.API",
+      "ColorIndex": 4
+    },
+    "f0025187-a2e2-4d18-a2e4-18e387af915f": {
+      "ProjectGuid": "f0025187-a2e2-4d18-a2e4-18e387af915f",
+      "DisplayName": "MovieBase.API",
+      "ColorIndex": 5
     }
   },
-  "NextColorIndex": 4
+  "NextColorIndex": 6
 }

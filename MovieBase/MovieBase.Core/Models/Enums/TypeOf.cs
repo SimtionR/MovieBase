@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieBase.Core.Models
+namespace MovieBase.Core.Models.Enums
 {
-    public class User 
+    public enum TypeOf
     {
-        public int ProfileId { get; set; }
+        Movie,
+        TvShow,
+        Animation,
+        Documentary
     }
 }
