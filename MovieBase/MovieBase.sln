@@ -9,7 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieBase.Application", "Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieBase.Infrastructure", "MovieBase.Infrastructure\MovieBase.Infrastructure.csproj", "{51C3407E-ACAF-4770-977E-3622ECBBF39C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieBase.API", "MovieBase.API\MovieBase.API.csproj", "{F0025187-A2E2-4D18-A2E4-18E387AF915F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieBase.API", "MovieBase.API\MovieBase.API.csproj", "{F0025187-A2E2-4D18-A2E4-18E387AF915F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B4645ACE-822C-4A78-ABBD-5C5A220F9886} = {B4645ACE-822C-4A78-ABBD-5C5A220F9886}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

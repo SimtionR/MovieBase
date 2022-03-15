@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieBase.Core.Models
 {
-    public interface IPerson
+    public abstract class Person
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace MovieBase.Core.Models
 {
-    public class Critic : Person
+    public class Genre
     {
         public int Id { get; set; }
-     
+        public string Name { get; set; }
+        public string Description { get; set; }
+
     }
 }

@@ -11,5 +11,6 @@ namespace MovieBase.Core.Models
         public string Title { get; set; }
         public string RewiewContent { get; set; }
         public double Rating { get; set; }
+        public DateTime CommentDate { get; set; }
     }
 }

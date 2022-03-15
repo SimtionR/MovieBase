@@ -10,9 +10,9 @@ namespace MovieBase.Core.Models
     {
         public int Id { get; set; }
         public string UserName { get; set; }
-        public List<Movie> WatctList { get; set; }
-        public List<Movie> Ratings { get; set; }
-        public List<UserReview> Reviews { get; set; }
-        public List<Movie> PlayList { get; set; }
+        public List<Movie> WatctList { get; set; } = new List<Movie>();
+        public List<Movie> Ratings { get; set; } = new List<Movie>();
+        public List<UserReview> Reviews { get; set; } = new List<UserReview>();
+        public List<Movie> PlayList { get; set; }= new List<Movie>();
     }
 }
