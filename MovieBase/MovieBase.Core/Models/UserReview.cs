@@ -10,6 +10,7 @@ namespace MovieBase.Core.Models
     {
         public int Id { get; set; }
         public int ProfileId { get; set; }
-      
+       
+
     }
 }

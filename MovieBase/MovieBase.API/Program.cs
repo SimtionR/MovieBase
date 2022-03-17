@@ -1,5 +1,7 @@
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MovieBase.Application.Queries;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
 
@@ -16,7 +18,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MovieBaseDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<MovieBaseDbContext>(); 
+builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<MovieBaseDbContext>();
+builder.Services.AddMediatR(typeof(GetAllMoviesQuery));
 
 
 

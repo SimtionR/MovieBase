@@ -7,9 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Handlers\" />
-    <Folder Include="Queries\" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MovieBase.Core\MovieBase.Core.csproj" />
+    <ProjectReference Include="..\MovieBase.Infrastructure\MovieBase.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

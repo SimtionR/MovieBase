@@ -22,7 +22,7 @@ namespace MovieBase.Infrastructure
         public DbSet<UserReview> UserReviews { get; set; }
         public DbSet<CriticReview> CriticReviews { get; set; }
         public DbSet<PersonalDetails> PersonalDetails { get; set; }
-        public DbSet<MovieStar> MovieStars { get; set; }
+        public DbSet<Actor> MovieStars { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Filmography> Filmographies { get; set; }
         public DbSet<Critic> Critics { get; set; }

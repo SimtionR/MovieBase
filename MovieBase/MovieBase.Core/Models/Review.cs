@@ -12,5 +12,7 @@ namespace MovieBase.Core.Models
         public string RewiewContent { get; set; }
         public double Rating { get; set; }
         public DateTime CommentDate { get; set; }
+        public int MovieId { get; set; }
+        public Movie MovieReviewd { get; set; }
     }
 }
