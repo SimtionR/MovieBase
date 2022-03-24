@@ -13,7 +13,6 @@ namespace MovieBase.Core.RequestModels
         public string Description { get; set; }
         public int Duration { get; set; }
         public string TypeOf { get; set; }
-        public double MetaScore { get; set; }
-        public double UserRating { get; set; }
+   
     }
 }

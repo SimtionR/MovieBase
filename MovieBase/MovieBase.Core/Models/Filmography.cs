@@ -9,11 +9,12 @@ namespace MovieBase.Core.Models
     public class Filmography
     {
         public int Id { get; set; }
-        public int MovieStarId { get; set; }
-        public List<Movie> Actor { get; set; }
-        public List<Movie> Director { get; set; }
-        public List<Movie> Soundtrack { get; set; }
-        public List<Movie> Producer { get; set; }
+        public int ActorId { get; set; }
+        public Actor Actor { get; set; }
+        public List<Movie> CastActor { get; set; }
+        public List<Movie> CastDirector { get; set; }
+        public List<Movie> CastSoundtrack { get; set; }
+        public List<Movie> CastProducer { get; set; }
 
     }
 }

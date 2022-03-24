@@ -10,22 +10,20 @@ using System.Threading.Tasks;
 
 namespace MovieBase.Application.Handlers
 {
-    public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, Movie>
+    public class AddActorCommandHandler : IRequestHandler<AddActorCommand, Actor>
     {
         private readonly MovieBaseDbContext _ctx;
 
-        public AddMovieCommandHandler(MovieBaseDbContext ctx)
+        public AddActorCommandHandler(MovieBaseDbContext ctx)
         {
             _ctx = ctx;
         }
-        public async Task<Movie> Handle(AddMovieCommand request, CancellationToken cancellationToken)
+        public async Task<Actor> Handle(AddActorCommand request, CancellationToken cancellationToken)
         {
-         
 
-            _ctx.Movies.Add(request.NewMovie);
+            _ctx.Actors.Add(request.NewActor);
             await _ctx.SaveChangesAsync();
-
-            return request.NewMovie;
+            return request.NewActor;
         }
     }
 }

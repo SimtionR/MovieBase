@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieBase.Infrastructure;
 
@@ -11,9 +12,10 @@ using MovieBase.Infrastructure;
 namespace MovieBase.Infrastructure.Migrations
 {
     [DbContext(typeof(MovieBaseDbContext))]
-    partial class MovieBaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220317105334_Actors change2")]
+    partial class Actorschange2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,7 +189,7 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasIndex("MovieDetailsId");
 
-                    b.ToTable("Actors", (string)null);
+                    b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Award", b =>
@@ -222,7 +224,7 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("Awards", (string)null);
+                    b.ToTable("Awards");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Critic", b =>
@@ -246,7 +248,7 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Critics", (string)null);
+                    b.ToTable("Critics");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.CriticReview", b =>
@@ -290,7 +292,7 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("CriticReviews", (string)null);
+                    b.ToTable("CriticReviews");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Filmography", b =>
@@ -311,7 +313,7 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasIndex("ActorId1");
 
-                    b.ToTable("Filmographies", (string)null);
+                    b.ToTable("Filmographies");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Genre", b =>
@@ -337,7 +339,7 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasIndex("MovieDetailsId");
 
-                    b.ToTable("Genre", (string)null);
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Movie", b =>
@@ -407,7 +409,7 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasIndex("ProfileId2");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.MovieDetails", b =>
@@ -432,7 +434,7 @@ namespace MovieBase.Infrastructure.Migrations
                     b.HasIndex("MovieId")
                         .IsUnique();
 
-                    b.ToTable("MovieDetails", (string)null);
+                    b.ToTable("MovieDetails");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.PersonalDetails", b =>
@@ -467,7 +469,7 @@ namespace MovieBase.Infrastructure.Migrations
                     b.HasIndex("ActorId")
                         .IsUnique();
 
-                    b.ToTable("PersonalDetails", (string)null);
+                    b.ToTable("PersonalDetails");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Profile", b =>
@@ -484,7 +486,7 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profiles", (string)null);
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.User", b =>
@@ -594,7 +596,7 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasIndex("ProfileId");
 
-                    b.ToTable("UserReviews", (string)null);
+                    b.ToTable("UserReviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

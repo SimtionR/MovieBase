@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace MovieBase.Application.Commands
 {
-    public class AddMovieCommand : IRequest<Movie>
+    public class AddMovieDetailsCommand : IRequest<MovieDetails>
     {
-        public Movie NewMovie { get; set; }
+        public MovieDetails NewMovieDetails { get; set; }
     }
 }

@@ -22,13 +22,29 @@ namespace MovieBase.Infrastructure
         public DbSet<UserReview> UserReviews { get; set; }
         public DbSet<CriticReview> CriticReviews { get; set; }
         public DbSet<PersonalDetails> PersonalDetails { get; set; }
-        public DbSet<Actor> MovieStars { get; set; }
+        public DbSet<Actor> Actors { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<MovieDetails> MovieDetails { get; set; }
         public DbSet<Filmography> Filmographies { get; set; }
         public DbSet<Critic> Critics { get; set; }
         public DbSet<Award> Awards { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
-     
+            builder.Entity<Movie>()
+                .HasOne(m => m.MovieDetails)
+                .WithOne(m => m.Movie)
+                .HasForeignKey<MovieDetails>(m => m.MovieId);
+
+            builder.Entity<Actor>()
+                .HasOne(p => p.PersonalDetails)
+                .WithOne(p => p.Actor)
+                .HasForeignKey<PersonalDetails>(p => p.ActorId);
+
+
+           
+        }
     }
 }

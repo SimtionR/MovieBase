@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieBase.Application.Commands
+namespace MovieBase.Application.Queries
 {
-    public class AddMovieCommand : IRequest<Movie>
+    public class GetAllActorsQuery : IRequest<IEnumerable<Actor>>
     {
-        public Movie NewMovie { get; set; }
+
     }
 }
