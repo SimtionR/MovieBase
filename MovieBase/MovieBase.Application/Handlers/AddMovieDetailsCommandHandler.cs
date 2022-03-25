@@ -22,9 +22,22 @@ namespace MovieBase.Application.Handlers
 
         public async Task<MovieDetails> Handle(AddMovieDetailsCommand request, CancellationToken cancellationToken)
         {
+            foreach(var genre in request.ListOfGenresId )
+            {
+
+            }
+
+            foreach(var genre in request.ListOfActorsId)
+            {
+
+            }
+
             _ctx.MovieDetails.Add(request.NewMovieDetails);
+
+
             var movie = await _ctx.Movies.Where(m => m.Id == request.NewMovieDetails.MovieId).FirstOrDefaultAsync();
             _ctx.Movies.Update(movie).Entity.MovieDetailsId = request.NewMovieDetails.Id;
+            _ctx.Movies.Update(movie);
 
             _ctx.SaveChangesAsync();
 

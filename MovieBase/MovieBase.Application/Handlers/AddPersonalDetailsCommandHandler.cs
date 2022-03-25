@@ -25,9 +25,7 @@ namespace MovieBase.Application.Handlers
              
             var actor = await _ctx.Actors.Where(a => a.Id == request.NewPersonalDetails.ActorId).FirstOrDefaultAsync();
 
-            /* await _ctx.PersonalDetails.AddAsync(request.NewPersonalDetails);
-
-             var personalDetails =  _ctx.PersonalDetails.Where(p => p.ActorId == actor.Id);*/
+            
 
           _ctx.PersonalDetails.Add(request.NewPersonalDetails);
 

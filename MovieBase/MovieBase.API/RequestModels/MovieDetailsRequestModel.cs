@@ -10,8 +10,8 @@ namespace MovieBase.API.RequestModels
     public class MovieDetailsRequestModel
     {
 
-        public List<Genre> Genres { get; set; } = new List<Genre>();
-        public List<Actor> Actors { get; set; } = new List<Actor>();
+        public List<int> GenresId { get; set; } = new List<int>();
+        public List<int> ActorsId { get; set; } = new List<int>();
 
         public double MetaScore { get; set; }
         public double UserRating { get; set; }

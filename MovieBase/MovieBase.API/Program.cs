@@ -21,6 +21,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<MovieBaseDbContext>();
 builder.Services.AddMediatR(typeof(GetAllMoviesQuery));
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 

@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Oh15OhUr9FbqNzYl856kAiFvNEPjLeH+xPIpnk+35yO295Mbau2xyCzLpYIhxObxRfOkdT26SSBPxxQLqVolvw==",
+  "dgSpecHash": "LNtiS0XfRSOjFk0xTxMPPIwn4QT0mUyJLeVM4Bxp3w0ieOhaGfgpXNXvdyeuJfg5z+CgjiQb+9khOd1xJ4/N+Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\simti\\Desktop\\Work\\MovieBase\\MovieBase\\MovieBase.API\\MovieBase.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\simti\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
+    "C:\\Users\\simti\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\simti\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\simti\\.nuget\\packages\\mediatr\\10.0.1\\mediatr.10.0.1.nupkg.sha512",
     "C:\\Users\\simti\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",

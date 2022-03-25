@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MovieBase.API.RequestModels;
 using MovieBase.Application.Commands;
@@ -16,10 +17,12 @@ namespace MovieBase.API.Controllers
     public class MovieController: ApiController
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public MovieController(IMediator mediator)
+        public MovieController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator; 
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -42,16 +45,18 @@ namespace MovieBase.API.Controllers
 
         [HttpPost]
         [Route("addMovie")]
-        public async Task<ActionResult> AddMovie(MovieRequestModel movie)
+        public async Task<ActionResult> AddMovie(MovieRequestModel movieModel)
         {
-            Movie movieToAdd = new Movie
+            /*Movie movieToAdd = new Movie
             {
                 Name = movie.Name,
                 MoviePhoto = movie.MoviePhoto,
                 Description = movie.Description,
                 Duration = movie.Duration,
                 TypeOf = movie.TypeOf      
-            };
+            };*/
+
+            var movieToAdd = _mapper.Map<Movie>(movieModel);
 
             var command = new AddMovieCommand() { NewMovie=movieToAdd};
             var result = await _mediator.Send(command);
@@ -64,20 +69,45 @@ namespace MovieBase.API.Controllers
         {
             var movie = await _mediator.Send(new GetMovieByIdQuery { MovieId = movieId });
 
+            
+
             if (movie == null)
                 return BadRequest();
+
+            var listOfActors = new List<Actor>();
+            var listOfGenres = new List<Genre>();
+
+            foreach (var actor in model.ActorsId)
+            {
+                var actorToAdd = await _mediator.Send(new GetActorByIdQuery { ActorId = actor });
+                if (actorToAdd == null)
+                    return BadRequest();
+
+                listOfActors.Add(actorToAdd);
+                
+            }
+            foreach (var genre in model.GenresId)
+            {
+                var genreToAdd = await _mediator.Send(new GetGenreByIdQuery { GenreId = genre });
+                if (genreToAdd == null)
+                    return BadRequest();
+
+                listOfGenres.Add(genreToAdd);
+
+            }
 
             MovieDetails detailsToAdd = new MovieDetails
             {
                Movie= movie,
                MovieId= movie.Id,
                MetaScore= model.MetaScore,
-               UserRating= model.UserRating,    
-               Genres= model.Genres,
-               Actors= model.Actors
+               UserRating= model.UserRating,
+               Actors = listOfActors,
+
+               
             };
 
-            var command = new AddMovieDetailsCommand() { NewMovieDetails = detailsToAdd };
+            var command = new AddMovieDetailsCommand() { NewMovieDetails = detailsToAdd, ListOfActorsId= model.ActorsId, ListOfGenresId=model.GenresId};
             var result = await _mediator.Send(command);
 
             return Ok(result);

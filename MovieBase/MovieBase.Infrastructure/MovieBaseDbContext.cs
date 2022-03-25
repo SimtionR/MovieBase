@@ -28,6 +28,7 @@ namespace MovieBase.Infrastructure
         public DbSet<Filmography> Filmographies { get; set; }
         public DbSet<Critic> Critics { get; set; }
         public DbSet<Award> Awards { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
