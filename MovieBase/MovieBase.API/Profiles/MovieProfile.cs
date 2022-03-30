@@ -1,4 +1,6 @@
-﻿using MovieBase.Core.Models;
+﻿using MovieBase.API.Contracts.ResponseModels;
+using MovieBase.Application.Commands;
+using MovieBase.Core.Models;
 using MovieBase.Core.RequestModels;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,10 @@ namespace MovieBase.API.Profiles
     {
         public MovieProfile()
         {
-            CreateMap<MovieRequestModel, Movie>();
+           
+            CreateMap<MovieRequestModel, AddMovieCommand>();
+            CreateMap<AddMovieCommand, Movie>();
+            CreateMap<Movie, MovieResponseModel>();
         }
     }
 }

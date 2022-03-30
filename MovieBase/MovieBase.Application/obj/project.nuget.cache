@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "KcKh52VfaHqIklw5vTDFnwzquEnT+jrOazTL0objujocBKB1to0IcQvSLJRS61330G01bnoNW/tqC2WzIlbkQw==",
+  "dgSpecHash": "yEK6s+T2nZ1yC9dmIZO9DX/flOXnMeJMDejCEOyGBdp86WkK6b3rS8ekLfhBpwpeD37bCjEuEMpiwKOJScXA1A==",
   "success": true,
   "projectFilePath": "C:\\Users\\simti\\Desktop\\Work\\MovieBase\\MovieBase\\MovieBase.Application\\MovieBase.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\simti\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\simti\\.nuget\\packages\\mediatr\\10.0.1\\mediatr.10.0.1.nupkg.sha512",
     "C:\\Users\\simti\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
     "C:\\Users\\simti\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.3\\microsoft.aspnetcore.cryptography.internal.6.0.3.nupkg.sha512",

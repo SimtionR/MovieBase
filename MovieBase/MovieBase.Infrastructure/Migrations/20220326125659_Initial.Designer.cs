@@ -12,8 +12,8 @@ using MovieBase.Infrastructure;
 namespace MovieBase.Infrastructure.Migrations
 {
     [DbContext(typeof(MovieBaseDbContext))]
-    [Migration("20220317083920_Relations Changes")]
-    partial class RelationsChanges
+    [Migration("20220326125659_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -179,7 +179,7 @@ namespace MovieBase.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MovieId")
+                    b.Property<int?>("MovieDetailsId")
                         .HasColumnType("int");
 
                     b.Property<int>("PersonalDetailsId")
@@ -187,9 +187,9 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieDetailsId");
 
-                    b.ToTable("MovieStars");
+                    b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Award", b =>
@@ -269,6 +269,9 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Property<int>("CriticId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MovieDetailsId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
@@ -284,6 +287,8 @@ namespace MovieBase.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MovieDetailsId");
 
                     b.HasIndex("MovieId");
 
@@ -301,10 +306,12 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Property<int>("ActorId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ActorId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ActorId")
-                        .IsUnique();
+                    b.HasIndex("ActorId1");
 
                     b.ToTable("Filmographies");
                 });
@@ -321,7 +328,7 @@ namespace MovieBase.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MovieId")
+                    b.Property<int?>("MovieDetailsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -330,9 +337,9 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieDetailsId");
 
-                    b.ToTable("Genre");
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Movie", b =>
@@ -362,8 +369,8 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Property<int?>("FilmographyId3")
                         .HasColumnType("int");
 
-                    b.Property<double>("MetaScore")
-                        .HasColumnType("float");
+                    b.Property<int>("MovieDetailsId")
+                        .HasColumnType("int");
 
                     b.Property<string>("MoviePhoto")
                         .IsRequired()
@@ -386,9 +393,6 @@ namespace MovieBase.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("UserRating")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FilmographyId");
@@ -406,6 +410,31 @@ namespace MovieBase.Infrastructure.Migrations
                     b.HasIndex("ProfileId2");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("MovieBase.Core.Models.MovieDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("MetaScore")
+                        .HasColumnType("float");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("UserRating")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId")
+                        .IsUnique();
+
+                    b.ToTable("MovieDetails");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.PersonalDetails", b =>
@@ -539,6 +568,9 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Property<DateTime>("CommentDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("MovieDetailsId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
@@ -557,6 +589,8 @@ namespace MovieBase.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MovieDetailsId");
 
                     b.HasIndex("MovieId");
 
@@ -618,9 +652,9 @@ namespace MovieBase.Infrastructure.Migrations
 
             modelBuilder.Entity("MovieBase.Core.Models.Actor", b =>
                 {
-                    b.HasOne("MovieBase.Core.Models.Movie", null)
+                    b.HasOne("MovieBase.Core.Models.MovieDetails", null)
                         .WithMany("Actors")
-                        .HasForeignKey("MovieId");
+                        .HasForeignKey("MovieDetailsId");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Award", b =>
@@ -632,8 +666,12 @@ namespace MovieBase.Infrastructure.Migrations
 
             modelBuilder.Entity("MovieBase.Core.Models.CriticReview", b =>
                 {
-                    b.HasOne("MovieBase.Core.Models.Movie", "MovieReviewd")
+                    b.HasOne("MovieBase.Core.Models.MovieDetails", null)
                         .WithMany("CriticsReview")
+                        .HasForeignKey("MovieDetailsId");
+
+                    b.HasOne("MovieBase.Core.Models.Movie", "MovieReviewd")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -644,8 +682,8 @@ namespace MovieBase.Infrastructure.Migrations
             modelBuilder.Entity("MovieBase.Core.Models.Filmography", b =>
                 {
                     b.HasOne("MovieBase.Core.Models.Actor", "Actor")
-                        .WithOne("Filmography")
-                        .HasForeignKey("MovieBase.Core.Models.Filmography", "ActorId")
+                        .WithMany()
+                        .HasForeignKey("ActorId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -654,9 +692,9 @@ namespace MovieBase.Infrastructure.Migrations
 
             modelBuilder.Entity("MovieBase.Core.Models.Genre", b =>
                 {
-                    b.HasOne("MovieBase.Core.Models.Movie", null)
+                    b.HasOne("MovieBase.Core.Models.MovieDetails", null)
                         .WithMany("Genres")
-                        .HasForeignKey("MovieId");
+                        .HasForeignKey("MovieDetailsId");
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Movie", b =>
@@ -690,6 +728,17 @@ namespace MovieBase.Infrastructure.Migrations
                         .HasForeignKey("ProfileId2");
                 });
 
+            modelBuilder.Entity("MovieBase.Core.Models.MovieDetails", b =>
+                {
+                    b.HasOne("MovieBase.Core.Models.Movie", "Movie")
+                        .WithOne("MovieDetails")
+                        .HasForeignKey("MovieBase.Core.Models.MovieDetails", "MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("MovieBase.Core.Models.PersonalDetails", b =>
                 {
                     b.HasOne("MovieBase.Core.Models.Actor", "Actor")
@@ -703,8 +752,12 @@ namespace MovieBase.Infrastructure.Migrations
 
             modelBuilder.Entity("MovieBase.Core.Models.UserReview", b =>
                 {
-                    b.HasOne("MovieBase.Core.Models.Movie", "MovieReviewd")
+                    b.HasOne("MovieBase.Core.Models.MovieDetails", null)
                         .WithMany("UsersReview")
+                        .HasForeignKey("MovieDetailsId");
+
+                    b.HasOne("MovieBase.Core.Models.Movie", "MovieReviewd")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -722,9 +775,6 @@ namespace MovieBase.Infrastructure.Migrations
                 {
                     b.Navigation("Awards");
 
-                    b.Navigation("Filmography")
-                        .IsRequired();
-
                     b.Navigation("PersonalDetails")
                         .IsRequired();
                 });
@@ -741,6 +791,12 @@ namespace MovieBase.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("MovieBase.Core.Models.Movie", b =>
+                {
+                    b.Navigation("MovieDetails")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MovieBase.Core.Models.MovieDetails", b =>
                 {
                     b.Navigation("Actors");
 

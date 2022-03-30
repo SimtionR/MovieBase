@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MovieBase.Application.Queries;
+using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
 using System;
@@ -12,15 +13,15 @@ namespace MovieBase.Application.Handlers
 {
     public class GetGenreByIdQueryHandler : IRequestHandler<GetGenreByIdQuery, Genre>
     {
-        private readonly MovieBaseDbContext _ctx;
+        private readonly IGenreRepository _repo;
 
-        public GetGenreByIdQueryHandler(MovieBaseDbContext ctx)
+        public GetGenreByIdQueryHandler(IGenreRepository repo)
         {
-            _ctx = ctx; 
+          _repo = repo;
         }
         public async Task<Genre> Handle(GetGenreByIdQuery request, CancellationToken cancellationToken)
         {
-            return null;
+            return await _repo.GetGenreByIdAsync(request.GenreId);
         }
     }
 }

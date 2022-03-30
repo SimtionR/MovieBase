@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MovieBase.Application.Queries;
+using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
 using System;
@@ -13,16 +14,18 @@ namespace MovieBase.Application.Handlers
 {
     public class GetMovieByIdQueryHandler : IRequestHandler<GetMovieByIdQuery, Movie>
     {
-        private readonly MovieBaseDbContext _ctx;
+        private readonly IMovieRepository _repo;
 
-        public GetMovieByIdQueryHandler(MovieBaseDbContext ctx)
+        public GetMovieByIdQueryHandler(IMovieRepository repo)
         {
-            _ctx = ctx; 
+            _repo = repo;
         }
+
 
         public async Task<Movie> Handle(GetMovieByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _ctx.Movies.Where(m => m.Id == request.MovieId).FirstOrDefaultAsync();
+            return await _repo.GetMovieByIdAsync(request.MovieId);
+            
         }
 
       

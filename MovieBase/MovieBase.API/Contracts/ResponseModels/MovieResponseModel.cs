@@ -1,15 +1,14 @@
-﻿using MediatR;
-using MovieBase.Core.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieBase.Application.Commands
+namespace MovieBase.API.Contracts.ResponseModels
 {
-    public class AddMovieCommand : IRequest<Movie>
+    public class MovieResponseModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string MoviePhoto { get; set; }
         public string Description { get; set; }

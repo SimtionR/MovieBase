@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.API.RequestModels;
 using MovieBase.Application.Commands;
 using MovieBase.Application.Queries;
@@ -28,59 +29,61 @@ namespace MovieBase.API.Controllers
 
         [HttpGet]
         [Route("getActors")]
-        public async Task<IEnumerable<Actor>> GetActors()
+        public async Task<IEnumerable<ActorResponseModel>> GetActors()
         {
             var result = await _mediator.Send(new GetAllActorsQuery());
-            return result;
+            var responseModels = new List<ActorResponseModel>();
+            foreach(var actor in result)
+            {
+                var responseModel = _mapper.Map<ActorResponseModel>(actor);
+                responseModels.Add(responseModel);
+            }
+
+            return responseModels;
         }
 
         [HttpGet]
         [Route("actorId/{actorId}")]
-        public async Task<ActionResult<Actor>> GetActorById(int actorId)
+        public async Task<ActionResult<ActorResponseModel>> GetActorById(int actorId)
         {
             var result = await _mediator.Send(new GetActorByIdQuery { ActorId = actorId });
             if (result == null)
                 return NotFound();
 
-            return result;
+            return _mapper.Map<ActorResponseModel>(result);
         }
 
         [HttpPost]
         [Route("addActor")]
-        public async Task<Actor> AddActor(ActorRequestModel actorModel)
+        public async Task<ActionResult<ActorResponseModel>> AddActor(ActorRequestModel actorModel)
         {
-            /*var actorToAdd = new Actor
-            {
-                FirstName = actor.FirstName,
-                LastName = actor.LastName,
-                Age = actor.Age
-            };*/
-            var actorToAdd = _mapper.Map<Actor>(actorModel);
-            var command = new AddActorCommand() { NewActor = actorToAdd };
-            var result = await _mediator.Send(command);
+            
 
-            return result;
+            var addActorCommand = _mapper.Map<AddActorCommand>(actorModel);
+   
+            var result = await _mediator.Send(addActorCommand);
+ 
+
+            if (result == null)
+                return BadRequest(result);
+
+            return _mapper.Map<ActorResponseModel>(result);
         }
 
-        [HttpPost]
+
+
+
+        /*[HttpPost]
         [Route("addPersonalDetails/{actorId}")]
         public async Task<ActionResult<PersonalDetails>> AddActorPersonalDetails(int actorId, PersonalDetailsRequestModel personalDetailsModel)
         {
-            var actor = await _mediator.Send(new GetActorByIdQuery() { ActorId = actorId });
+            *//*var actor = await _mediator.Send(new GetActorByIdQuery() { ActorId = actorId });
 
             if (actor == null)
                 return NotFound();
 
 
-            /*var detailsToAdd = new PersonalDetails
-            {
-                Actor = actor,
-                ActorId = actorId,
-                Birthdate = personalDetails.Birthdate,
-                City = personalDetails.City,
-                Country = personalDetails.Country,
-                History = personalDetails.History,
-            };*/
+            
 
             var detailsToAdd = _mapper.Map<PersonalDetails>(personalDetailsModel);
             detailsToAdd.Actor = actor;
@@ -89,12 +92,13 @@ namespace MovieBase.API.Controllers
             var command = new AddPersonalDetailsCommand() { NewPersonalDetails = detailsToAdd };
             var result = await _mediator.Send(command);
 
-            return result;
+            return result;*//*
+            return null;
 
 
            
 
-        }
+        }*/
 
     }
 }

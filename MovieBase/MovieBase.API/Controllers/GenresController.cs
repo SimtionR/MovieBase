@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.API.RequestModels;
 using MovieBase.Application.Commands;
 using MovieBase.Core.Models;
@@ -25,13 +26,26 @@ namespace MovieBase.API.Controllers
 
         [HttpGet]
         [Route("getGenre/{genreId}")]
-        public async Task<ActionResult> GetGenreById(int genreId)
+        public async Task<ActionResult<GenreResponseModel>> GetGenreById(int genreId)
+        {
+            return null;
+        }
+
+        [HttpGet]
+        [Route("allGenres")]
+        public async Task<IEnumerable<GenreResponseModel>> GetAllGenres()
+        {
+            return null;
+        }
+        [HttpGet]
+        [Route("getGenre/{genreName}")]
+        public async Task<GenreResponseModel> GetGenreByName(string genreName)
         {
             return null;
         }
         [HttpPost]
         [Route("addGenre")]
-        public async Task<ActionResult> AddGenre(GenreRequestModel genreModel)
+        public async Task<ActionResult<GenreResponseModel>> AddGenre(GenreRequestModel genreModel)
         {
             
             
@@ -41,10 +55,9 @@ namespace MovieBase.API.Controllers
                 Name = model.Name
             };*/
 
-            var genreToAdd = _mapper.Map<Genre>(genreModel);
-
-            var command = new AddGenreCommand() { NewGenre = genreToAdd };
-            var result = await _mediator.Send(command);
+            var genreCommand = _mapper.Map<AddGenreCommand>(genreModel);
+           
+            var result = await _mediator.Send(genreCommand);
 
             return Ok(result);
 

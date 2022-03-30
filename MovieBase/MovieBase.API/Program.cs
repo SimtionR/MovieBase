@@ -2,8 +2,10 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MovieBase.Application.Queries;
+using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
+using MovieBase.Infrastructure.Repositoriers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,12 +18,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddDbContext<MovieBaseDbContext>(options =>
+builder.Services.AddDbContext<MovieBaseDbContext>((DbContextOptionsBuilder options) =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<MovieBaseDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MovieBaseDbContext>();
 builder.Services.AddMediatR(typeof(GetAllMoviesQuery));
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddTransient<IActorRepository, ActorRepository>();
+builder.Services.AddTransient<IMovieRepository,MovieRepository>();
+builder.Services.AddTransient<IGenreRepository, GenreRepository>();
+builder.Services.AddTransient<IPersonalDetailsRepository, PersonalDetailsRepository>();
 
 
 

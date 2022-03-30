@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.API.RequestModels;
 using MovieBase.Application.Commands;
 using MovieBase.Application.Queries;
@@ -27,40 +28,45 @@ namespace MovieBase.API.Controllers
 
         [HttpGet]
         [Route("movies")]
-        public async Task<IEnumerable<Movie>> GetMovies()
+        public async Task<IEnumerable<MovieResponseModel>> GetMovies()
         {
             var result = await _mediator.Send(new GetAllMoviesQuery());
-            return result;
+
+            var movieResponseList = new List<MovieResponseModel>();
+            
+            foreach(var movie in result)
+            {
+                var movieResponse = _mapper.Map<MovieResponseModel>(movie);
+                movieResponseList.Add(movieResponse);
+            }
+
+            return movieResponseList;
+           
         }
         [HttpGet]
         [Route("movieId/{movieId}")]
-        public async Task<ActionResult<Movie>> GetMovieById(int movieId)
+        public async Task<ActionResult<MovieResponseModel>> GetMovieById(int movieId)
         {
             var result = await _mediator.Send(new GetMovieByIdQuery { MovieId = movieId});
             if (result != null)
-                return result;
+                return _mapper.Map<MovieResponseModel>(result);
 
             return NotFound();
         }
 
         [HttpPost]
         [Route("addMovie")]
-        public async Task<ActionResult> AddMovie(MovieRequestModel movieModel)
+        public async Task<ActionResult<MovieResponseModel>> AddMovie(MovieRequestModel movieModel)
         {
-            /*Movie movieToAdd = new Movie
-            {
-                Name = movie.Name,
-                MoviePhoto = movie.MoviePhoto,
-                Description = movie.Description,
-                Duration = movie.Duration,
-                TypeOf = movie.TypeOf      
-            };*/
+            
+            var movieCommand = _mapper.Map<AddMovieCommand>(movieModel);
 
-            var movieToAdd = _mapper.Map<Movie>(movieModel);
+            var result = await _mediator.Send(movieCommand);
+            var movieResposne = _mapper.Map<MovieResponseModel>(result);
+            if (movieResposne == null)
+                return BadRequest();
 
-            var command = new AddMovieCommand() { NewMovie=movieToAdd};
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            return movieResposne;
         }
 
         [HttpPost]

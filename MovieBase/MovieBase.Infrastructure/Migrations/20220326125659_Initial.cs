@@ -184,39 +184,44 @@ namespace MovieBase.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Actors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonalDetailsId = table.Column<int>(type: "int", nullable: false),
+                    FilmographyId = table.Column<int>(type: "int", nullable: false),
+                    MovieDetailsId = table.Column<int>(type: "int", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Actors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Awards",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-
+                    MovieStarId = table.Column<int>(type: "int", nullable: false),
                     Movie = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     isWinner = table.Column<bool>(type: "bit", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ActorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Awards", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CriticReviews",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CriticId = table.Column<int>(type: "int", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RewiewContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rating = table.Column<double>(type: "float", nullable: false),
-                    CommentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CriticReviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Awards_Actors_ActorId",
+                        column: x => x.ActorId,
+                        principalTable: "Actors",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -225,26 +230,41 @@ namespace MovieBase.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MovieStarId = table.Column<int>(type: "int", nullable: false)
+                    ActorId = table.Column<int>(type: "int", nullable: false),
+                    ActorId1 = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Filmographies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Filmographies_Actors_ActorId1",
+                        column: x => x.ActorId1,
+                        principalTable: "Actors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Genre",
+                name: "PersonalDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: true)
+                    ActorId = table.Column<int>(type: "int", nullable: false),
+                    Birthdate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    History = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genre", x => x.Id);
+                    table.PrimaryKey("PK_PersonalDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonalDetails_Actors_ActorId",
+                        column: x => x.ActorId,
+                        principalTable: "Actors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,10 +278,7 @@ namespace MovieBase.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
                     TypeOf = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DirectorId = table.Column<int>(type: "int", nullable: false),
-                    MetaScore = table.Column<double>(type: "float", nullable: false),
-                    UserRating = table.Column<double>(type: "float", nullable: false),
+                    MovieDetailsId = table.Column<int>(type: "int", nullable: false),
                     FilmographyId = table.Column<int>(type: "int", nullable: true),
                     FilmographyId1 = table.Column<int>(type: "int", nullable: true),
                     FilmographyId2 = table.Column<int>(type: "int", nullable: true),
@@ -311,29 +328,74 @@ namespace MovieBase.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovieStars",
+                name: "MovieDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MovieId = table.Column<int>(type: "int", nullable: true),
-                    MovieId1 = table.Column<int>(type: "int", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false)
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    MetaScore = table.Column<double>(type: "float", nullable: false),
+                    UserRating = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieStars", x => x.Id);
+                    table.PrimaryKey("PK_MovieDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MovieStars_Movies_MovieId",
+                        name: "FK_MovieDetails_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CriticReviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CriticId = table.Column<int>(type: "int", nullable: false),
+                    MovieDetailsId = table.Column<int>(type: "int", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RewiewContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rating = table.Column<double>(type: "float", nullable: false),
+                    CommentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MovieId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CriticReviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CriticReviews_MovieDetails_MovieDetailsId",
+                        column: x => x.MovieDetailsId,
+                        principalTable: "MovieDetails",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_MovieStars_Movies_MovieId1",
-                        column: x => x.MovieId1,
+                        name: "FK_CriticReviews_Movies_MovieId",
+                        column: x => x.MovieId,
                         principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Genres",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MovieDetailsId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Genres", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Genres_MovieDetails_MovieDetailsId",
+                        column: x => x.MovieDetailsId,
+                        principalTable: "MovieDetails",
                         principalColumn: "Id");
                 });
 
@@ -344,20 +406,27 @@ namespace MovieBase.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProfileId = table.Column<int>(type: "int", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: true),
+                    MovieDetailsId = table.Column<int>(type: "int", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RewiewContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<double>(type: "float", nullable: false),
-                    CommentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CommentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MovieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserReviews", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_UserReviews_MovieDetails_MovieDetailsId",
+                        column: x => x.MovieDetailsId,
+                        principalTable: "MovieDetails",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_UserReviews_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserReviews_Profiles_ProfileId",
                         column: x => x.ProfileId,
@@ -366,28 +435,10 @@ namespace MovieBase.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PersonalDetails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MovieStarId = table.Column<int>(type: "int", nullable: false),
-                    Birthdate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    History = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonalDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PersonalDetails_MovieStars_MovieStarId",
-                        column: x => x.MovieStarId,
-                        principalTable: "MovieStars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_Actors_MovieDetailsId",
+                table: "Actors",
+                column: "MovieDetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -429,9 +480,14 @@ namespace MovieBase.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Awards_MovieStarId",
+                name: "IX_Awards_ActorId",
                 table: "Awards",
-                column: "MovieStarId");
+                column: "ActorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CriticReviews_MovieDetailsId",
+                table: "CriticReviews",
+                column: "MovieDetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CriticReviews_MovieId",
@@ -439,20 +495,20 @@ namespace MovieBase.Infrastructure.Migrations
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Filmographies_MovieStarId",
+                name: "IX_Filmographies_ActorId1",
                 table: "Filmographies",
-                column: "MovieStarId",
+                column: "ActorId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Genres_MovieDetailsId",
+                table: "Genres",
+                column: "MovieDetailsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MovieDetails_MovieId",
+                table: "MovieDetails",
+                column: "MovieId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Genre_MovieId",
-                table: "Genre",
-                column: "MovieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Movies_DirectorId",
-                table: "Movies",
-                column: "DirectorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Movies_FilmographyId",
@@ -490,20 +546,15 @@ namespace MovieBase.Infrastructure.Migrations
                 column: "ProfileId2");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieStars_MovieId",
-                table: "MovieStars",
-                column: "MovieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieStars_MovieId1",
-                table: "MovieStars",
-                column: "MovieId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersonalDetails_MovieStarId",
+                name: "IX_PersonalDetails_ActorId",
                 table: "PersonalDetails",
-                column: "MovieStarId",
+                column: "ActorId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserReviews_MovieDetailsId",
+                table: "UserReviews",
+                column: "MovieDetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserReviews_MovieId",
@@ -516,53 +567,18 @@ namespace MovieBase.Infrastructure.Migrations
                 column: "ProfileId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Awards_MovieStars_MovieStarId",
-                table: "Awards",
-                column: "MovieStarId",
-                principalTable: "MovieStars",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_CriticReviews_Movies_MovieId",
-                table: "CriticReviews",
-                column: "MovieId",
-                principalTable: "Movies",
+                name: "FK_Actors_MovieDetails_MovieDetailsId",
+                table: "Actors",
+                column: "MovieDetailsId",
+                principalTable: "MovieDetails",
                 principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Filmographies_MovieStars_MovieStarId",
-                table: "Filmographies",
-                column: "MovieStarId",
-                principalTable: "MovieStars",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Genre_Movies_MovieId",
-                table: "Genre",
-                column: "MovieId",
-                principalTable: "Movies",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Movies_MovieStars_DirectorId",
-                table: "Movies",
-                column: "DirectorId",
-                principalTable: "MovieStars",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Filmographies_MovieStars_MovieStarId",
-                table: "Filmographies");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Movies_MovieStars_DirectorId",
-                table: "Movies");
+                name: "FK_Actors_MovieDetails_MovieDetailsId",
+                table: "Actors");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -589,7 +605,7 @@ namespace MovieBase.Infrastructure.Migrations
                 name: "Critics");
 
             migrationBuilder.DropTable(
-                name: "Genre");
+                name: "Genres");
 
             migrationBuilder.DropTable(
                 name: "PersonalDetails");
@@ -604,7 +620,7 @@ namespace MovieBase.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "MovieStars");
+                name: "MovieDetails");
 
             migrationBuilder.DropTable(
                 name: "Movies");
@@ -614,6 +630,9 @@ namespace MovieBase.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Profiles");
+
+            migrationBuilder.DropTable(
+                name: "Actors");
         }
     }
 }

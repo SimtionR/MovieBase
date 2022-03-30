@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using MovieBase.Application.Commands;
+using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
 using System;
@@ -12,18 +14,19 @@ namespace MovieBase.Application.Handlers
 {
     public class AddGenreCommandHandler : IRequestHandler<AddGenreCommand, Genre>
     {
-        private readonly MovieBaseDbContext _ctx;
+        private readonly IGenreRepository _repo;
+        private readonly IMapper _mapper;
 
-        public AddGenreCommandHandler(MovieBaseDbContext ctx)
+        public AddGenreCommandHandler(IGenreRepository repo, IMapper mapper)
         {
-            _ctx = ctx;
+            _repo = repo;
+            _mapper = mapper;
         }
         public async Task<Genre> Handle(AddGenreCommand request, CancellationToken cancellationToken)
         {
-            _ctx.Add(request.NewGenre);
-            await _ctx.SaveChangesAsync();
+            var genre = _mapper.Map<Genre>(request);
 
-            return request.NewGenre;
+            return await _repo.CreateGenreAsync(genre);
         }
     }
 }

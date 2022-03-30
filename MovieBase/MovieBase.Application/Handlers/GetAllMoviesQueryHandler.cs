@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MovieBase.Application.Queries;
+using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
 using System;
@@ -13,15 +14,15 @@ namespace MovieBase.Application.Handlers
 {
     public class GetAllMoviesQueryHandler : IRequestHandler<GetAllMoviesQuery, List<Movie>>
     {
-        private readonly MovieBaseDbContext _ctx;
+        private readonly IMovieRepository _repo;
 
-        public GetAllMoviesQueryHandler(MovieBaseDbContext ctx)
+        public GetAllMoviesQueryHandler(IMovieRepository repo)
         {
-            _ctx = ctx; 
+            _repo = repo;
         }
         public async Task<List<Movie>> Handle(GetAllMoviesQuery request, CancellationToken cancellationToken)
         {
-            return await  _ctx.Movies.ToListAsync();
+            return (List<Movie>)await _repo.GetAllMoviesAsync();
         }
     }
 }

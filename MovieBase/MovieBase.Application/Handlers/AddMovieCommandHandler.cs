@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using MovieBase.Application.Commands;
+using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
 using System;
@@ -12,20 +14,19 @@ namespace MovieBase.Application.Handlers
 {
     public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, Movie>
     {
-        private readonly MovieBaseDbContext _ctx;
-
-        public AddMovieCommandHandler(MovieBaseDbContext ctx)
+        private readonly IMovieRepository _repo;
+        private readonly IMapper _mapper;
+        public AddMovieCommandHandler(IMovieRepository repo, IMapper mapper)
         {
-            _ctx = ctx;
+            _repo = repo;
+            _mapper = mapper;
         }
         public async Task<Movie> Handle(AddMovieCommand request, CancellationToken cancellationToken)
         {
-         
+            var movie = _mapper.Map<Movie>(request);
 
-            _ctx.Movies.Add(request.NewMovie);
-            await _ctx.SaveChangesAsync();
-
-            return request.NewMovie;
+            return await _repo.CreateMovieAsync(movie);
+            
         }
     }
 }

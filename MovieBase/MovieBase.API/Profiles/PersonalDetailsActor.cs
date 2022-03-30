@@ -1,5 +1,7 @@
 ﻿
+using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.API.RequestModels;
+using MovieBase.Application.Commands;
 using MovieBase.Core.Models;
 
 namespace MovieBase.API.Profiles
@@ -8,7 +10,10 @@ namespace MovieBase.API.Profiles
     {
         public PersonalDetailsActor()
         {
-            CreateMap<PersonalDetailsRequestModel, PersonalDetails>();
+            
+            CreateMap<PersonalDetailsRequestModel, AddPersonalDetailsCommand>();
+            CreateMap<AddPersonalDetailsCommand, PersonalDetails>();
+            CreateMap<PersonalDetails, PersonalDetailsResponseModel>();
                 
         }
     }

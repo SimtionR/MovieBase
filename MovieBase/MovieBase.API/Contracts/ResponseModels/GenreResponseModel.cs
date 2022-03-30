@@ -1,15 +1,14 @@
-﻿using MediatR;
-using MovieBase.Core.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieBase.Application.Commands
+namespace MovieBase.API.Contracts.ResponseModels
 {
-    public class AddGenreCommand : IRequest<Genre>
+    public class GenreResponseModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }
