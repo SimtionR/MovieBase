@@ -29,6 +29,7 @@ builder.Services.AddTransient<IActorRepository, ActorRepository>();
 builder.Services.AddTransient<IMovieRepository,MovieRepository>();
 builder.Services.AddTransient<IGenreRepository, GenreRepository>();
 builder.Services.AddTransient<IPersonalDetailsRepository, PersonalDetailsRepository>();
+builder.Services.AddTransient<IMovieDetailsRepository, MovieDetailsRepository>();
 
 
 

@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MovieBase.Application.Commands;
+using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
 using System;
@@ -13,16 +15,19 @@ namespace MovieBase.Application.Handlers
 {
     public class AddMovieDetailsCommandHandler : IRequestHandler<AddMovieDetailsCommand, MovieDetails>
     {
-        private readonly MovieBaseDbContext _ctx;
+        private readonly IMovieDetailsRepository _repo;
+        private readonly IMapper _mapper;
 
-        public AddMovieDetailsCommandHandler(MovieBaseDbContext ctx)
+        public AddMovieDetailsCommandHandler(IMovieDetailsRepository repo, IMapper mapper)
         {
-            _ctx= ctx;
+            _repo = repo;
+            _mapper = mapper;
+            
         }
 
         public async Task<MovieDetails> Handle(AddMovieDetailsCommand request, CancellationToken cancellationToken)
         {
-            foreach(var genre in request.ListOfGenresId )
+            /*foreach(var genre in request.ListOfGenresId )
             {
 
             }
@@ -41,7 +46,10 @@ namespace MovieBase.Application.Handlers
 
             _ctx.SaveChangesAsync();
 
-            return request.NewMovieDetails;
+            return request.NewMovieDetails;*/
+
+            var personalDetails = _mapper.Map<MovieDetails>(request);
+            return await _repo.CreateMovieDetailsAsync(personalDetails, request.ActorsId, request.GenresId);
 
         }
     }

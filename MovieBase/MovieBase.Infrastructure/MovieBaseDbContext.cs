@@ -44,6 +44,11 @@ namespace MovieBase.Infrastructure
                 .WithOne(p => p.Actor)
                 .HasForeignKey<PersonalDetails>(p => p.ActorId);
 
+            
+                
+                    
+                
+
 
            
         }

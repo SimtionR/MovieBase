@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.API.RequestModels;
 using MovieBase.Application.Commands;
+using MovieBase.Application.Queries;
 using MovieBase.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,14 @@ namespace MovieBase.API.Controllers
 
 
         [HttpGet]
-        [Route("getGenre/{genreId}")]
+        [Route("getGenreById/{genreId}")]
         public async Task<ActionResult<GenreResponseModel>> GetGenreById(int genreId)
         {
-            return null;
+            var result = await _mediator.Send(new GetGenreByIdQuery { GenreId = genreId });
+            if (result == null)
+                return BadRequest();
+
+            return _mapper.Map<GenreResponseModel>(result);
         }
 
         [HttpGet]
@@ -38,7 +43,7 @@ namespace MovieBase.API.Controllers
             return null;
         }
         [HttpGet]
-        [Route("getGenre/{genreName}")]
+        [Route("getGenreByName/{genreName}")]
         public async Task<GenreResponseModel> GetGenreByName(string genreName)
         {
             return null;

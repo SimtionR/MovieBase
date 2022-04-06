@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
+using MovieBase.Core.StrategyRecommandation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,39 @@ namespace MovieBase.Infrastructure.Repositoriers
         {
             var movie = await _ctx.Movies.Where(m => m.Id == id).FirstOrDefaultAsync();
             return movie;
+        }
+
+        public async Task<Movie> GetMovieByRecommandation(UserPreferences userPreferences, Profile profile)
+        {
+            userPreferences.CalculateUserPreferances(profile.Ratings);
+
+            var isMovie = userPreferences.CheckWatchListForRecommandation(profile.WatctList);
+
+
+            RecommandationContext recommandationContext = new RecommandationContext();
+
+            if (isMovie)
+            {
+                recommandationContext.SetStrategy(new WatchListRecommandation());
+
+                var movie = recommandationContext.RecommandMovie(profile.WatctList, userPreferences);
+                return movie;
+                
+
+            }
+            else
+            {
+                //var dbMovies = await _ctx.Movies.ToListAsync();
+                var goodFilmDetails = new MovieDetails { MetaScore = 10, UserRating = 10 };
+                var dbMovies = new List<Movie>() { new Movie { Name = "goodFilm", TypeOf = "Drama", MovieDetails = goodFilmDetails } };
+
+                recommandationContext.SetStrategy(new MovieBaseRecommandation());
+                var movie = recommandationContext.RecommandMovie(dbMovies, userPreferences);
+                return movie;
+                
+                
+
+            }
         }
     }
 }

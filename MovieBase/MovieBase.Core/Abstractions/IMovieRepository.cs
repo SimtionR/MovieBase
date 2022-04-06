@@ -12,5 +12,6 @@ namespace MovieBase.Core.Abstractions
         Task<Movie> CreateMovieAsync(Movie movie);
         Task<IEnumerable<Movie>> GetAllMoviesAsync();
         Task<Movie> GetMovieByIdAsync(int id);
+        Task<Movie> GetMovieByRecommandation(UserPreferences userPreferences, Profile profile);
     }
 }
