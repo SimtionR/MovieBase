@@ -12,7 +12,8 @@ namespace MovieBase.Core.Models
         public int PersonalDetailsId { get; set; }
         public PersonalDetails PersonalDetails { get; set; }
         public int FilmographyId { get; set; }
-        
+        public Filmography Filmography { get; set; }
+
         public List<Award> Awards { get; set; } = new List<Award>();
     }
 }

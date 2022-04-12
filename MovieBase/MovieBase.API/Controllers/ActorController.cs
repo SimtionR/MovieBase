@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.API.RequestModels;
@@ -41,9 +42,10 @@ namespace MovieBase.API.Controllers
 
             return responseModels;
         }
-
+     
         [HttpGet]
         [Route("actorId/{actorId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<ActorResponseModel>> GetActorById(int actorId)
         {
             var result = await _mediator.Send(new GetActorByIdQuery { ActorId = actorId });

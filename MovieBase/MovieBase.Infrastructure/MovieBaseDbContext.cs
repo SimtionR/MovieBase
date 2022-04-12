@@ -29,6 +29,7 @@ namespace MovieBase.Infrastructure
         public DbSet<Critic> Critics { get; set; }
         public DbSet<Award> Awards { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -43,6 +44,11 @@ namespace MovieBase.Infrastructure
                 .HasOne(p => p.PersonalDetails)
                 .WithOne(p => p.Actor)
                 .HasForeignKey<PersonalDetails>(p => p.ActorId);
+
+            builder.Entity<Actor>()
+                .HasOne(a => a.Filmography)
+                .WithOne(a => a.Actor)
+                .HasForeignKey<Filmography>(a => a.ActorId);
 
             
                 

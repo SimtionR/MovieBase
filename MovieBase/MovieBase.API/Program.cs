@@ -1,11 +1,15 @@
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using MovieBase.API;
 using MovieBase.Application.Queries;
 using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
 using MovieBase.Infrastructure.Repositoriers;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +25,42 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MovieBaseDbContext>((DbContextOptionsBuilder options) =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MovieBaseDbContext>();
+//refactor auth
+var appSettingsConfiguration = builder.Configuration.GetSection("ApplicationSettings");
+builder.Services.Configure<ApplicationSettings>(appSettingsConfiguration);
+
+var appSettings = appSettingsConfiguration.Get<ApplicationSettings>();
+var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+
+    };
+});
+   
+// --- auth
+
+builder.Services.AddIdentity<User, IdentityRole>(opt =>
+{
+    opt.Password.RequireDigit = false;
+    opt.Password.RequireLowercase = false;
+    opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequireUppercase = false;
+    opt.Password.RequiredLength = 6;
+})
+    .AddEntityFrameworkStores<MovieBaseDbContext>();
 builder.Services.AddMediatR(typeof(GetAllMoviesQuery));
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -40,11 +79,27 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+  ;
 }
+app.UseRouting();
+app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
+});
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+
+
+app.UseCors(options => options
+.AllowAnyOrigin()
+.AllowAnyHeader()
+.AllowAnyMethod());
+
+
 
 app.MapControllers();
 
