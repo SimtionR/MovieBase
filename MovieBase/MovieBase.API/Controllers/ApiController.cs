@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MovieBase.API.Controllers
 {
     [ApiController]
-    [Route("controller")]
+    [Route("[controller]")]
     public abstract class ApiController : ControllerBase
     {
 

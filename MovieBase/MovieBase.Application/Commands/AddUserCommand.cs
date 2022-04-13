@@ -1,0 +1,17 @@
+﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
+using MovieBase.Core.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MovieBase.Application.Commands
+{
+    public class AddUserCommand :IRequest<IdentityResult>
+    {
+        public User User { get; set; }
+        public string Password { get; set; }
+    }
+}

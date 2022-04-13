@@ -69,6 +69,7 @@ builder.Services.AddTransient<IMovieRepository,MovieRepository>();
 builder.Services.AddTransient<IGenreRepository, GenreRepository>();
 builder.Services.AddTransient<IPersonalDetailsRepository, PersonalDetailsRepository>();
 builder.Services.AddTransient<IMovieDetailsRepository, MovieDetailsRepository>();
+builder.Services.AddTransient<IIdentityRepository, IdentityRepository>();
 
 
 
@@ -81,23 +82,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
   ;
 }
-app.UseRouting();
-app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-
-});
-app.UseHttpsRedirection();
-
 
 
 app.UseCors(options => options
 .AllowAnyOrigin()
 .AllowAnyHeader()
 .AllowAnyMethod());
+
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+
+});
+
+
+
+
 
 
 

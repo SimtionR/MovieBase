@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MovieBase.API.Contracts.RequestModels;
+using MovieBase.Application.Commands;
+using MovieBase.Application.Queries;
 using MovieBase.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -16,12 +19,12 @@ namespace MovieBase.API.Controllers
 {
     public class IdentityController : ApiController
     {
-        private readonly UserManager<User> _userMananger;
+        private readonly IMediator _mediator;
         private readonly IOptions<ApplicationSettings> _appSettings;
 
-        public IdentityController(UserManager<User> userManager, IOptions<ApplicationSettings> appSettings)
+        public IdentityController(IOptions<ApplicationSettings> appSettings, IMediator mediator)
         {
-            _userMananger = userManager;
+            _mediator = mediator;
             _appSettings = appSettings;
         }
         [HttpPost]
@@ -34,47 +37,31 @@ namespace MovieBase.API.Controllers
                 UserName = model.UserName
             };
 
-            var result = await _userMananger.CreateAsync(user, model.Password);
-
+            var result = await _mediator.Send(new AddUserCommand { User = user, Password = model.Password });
             if(result.Succeeded)
             {
                 return Ok();
             }
 
-            return BadRequest(result.Errors);    
+            return BadRequest(result.Errors);
         }
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<string>> Login(LoginRequestModel model)
+        public async Task<ActionResult<object>> Login(LoginRequestModel model)
         {
-            var user = await _userMananger.FindByNameAsync(model.UserName);
+           
+
+            var user = await _mediator.Send(new GetValidUserQuery {UserName = model.UserName, Password = model.Password});
+
             if(user == null)
             {
                 return Unauthorized();
             }
 
-            var passwordIsValid = await _userMananger.CheckPasswordAsync(user, model.Password);
+            var result = await _mediator.Send
+                (new LoginUserCommand { Secret = _appSettings.Value.Secret, UserId = user.Id.ToString() });
 
-            if(!passwordIsValid)
-            {
-                return Unauthorized();
-            }    
-            // generate token that is valid for 7 days
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Value.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var encryptedToken = tokenHandler.WriteToken(token);
-
-            return encryptedToken;
+            return result;
         }
 
     }
