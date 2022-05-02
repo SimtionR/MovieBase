@@ -8,12 +8,28 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { RegisterComponent } from './Identity/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { GaugeModule } from 'angular-gauge';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { SearchBarComponent } from './search-bar/search-bar/search-bar.component';
+import { HomeComponent } from './home/home.component';
+import { ActorsComponent } from './Actors/actors/actors.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SearchBarComponent,
+    HomeComponent,
+    ActorsComponent,
+    MovieDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +37,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FormsModule,
+    GaugeModule.forRoot(),
+    MatFormFieldModule,
+    MatTabsModule,
+    MatIconModule,
+    MatSelectModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

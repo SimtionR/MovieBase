@@ -25,12 +25,14 @@ export class LoginComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    
   }
 
   login(){
     this.authService.login(this.loginForm.value).subscribe(
       data => {this.authService.saveToken(data['token']);
       this.toastrService.success("Logged in");
+      this.router.navigate(["/"]);
       
     }
     );

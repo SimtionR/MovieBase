@@ -1,0 +1,236 @@
+.actors{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 80%  ;
+    margin:50px auto;
+}
+
+
+.actor{
+    width:150px;
+    margin:10px;
+    height:250px;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: rgb(46, 41, 41);
+    box-shadow: 4px 3px 8px 0px rgb(200,152,44/22%);
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+
+
+.actor:hover {
+    box-shadow: 4px 3px 11px 6px rgb(200 152 44 / 46%);
+    transform: translateY(-3px);
+  }
+
+  .actor-info{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color:#000
+}
+
+.actor-thumb-container{
+   
+    background-color: #000;
+    position:relative;
+    height: 150px;
+    width:150px;
+    color:#fff;
+    text-align:center;
+}
+.actor-thumbnail{
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    margin: 0;
+    height: 172px;
+}
+
+.actor-image{
+  
+    height: 100%;    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-radius: 35px;
+   
+    }
+
+.actor-firstname,.actor-lastname, .actor-age {
+        margin-top: 5px;
+        color:#fff;
+        font-weight: 700;
+        font-size: 18px;
+        text-align: center;
+        
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .filters{
+        max-width: 1200px;
+        margin: 20px auto;
+        padding-left: 20px;
+    }
+    
+    ::ng-deep.mat-form-field-infix{
+        background-color: #3f51b5;
+       
+    }
+    
+    ::ng-deep.mat-select-value
+    ::ng-deep.mat-select-arrow,
+    ::ng-deep.mat-form-field-hide-placeholder .mat-select-placeholder,
+    ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-label{
+        color: #fff !important;
+        opacity: 1;
+    }
+    
+    ::ng-deep.mat-form-field-infix{
+        border-color: #fff !important;
+        border-top: none;
+        padding-left: 5px !important;
+    }
+    
+    ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-label{
+        padding-left: 5px;
+        
+    }
+    
+    :ng-deep.mat-form-field-appearance-legacy .mat-form-field-underline{
+        background-color: #fff !important   ;
+    }
+    
+ 
+    
+    .movie {
+       
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        max-width: 60%;
+        width: 1000px;
+        height: 350px;
+        max-height: 50%;
+        margin:50px auto;
+        border-radius: 5px;
+        background-color: rgb(46, 41, 41);
+        box-shadow: 4px 3px 8px 0px rgb(200,152,44/22%);
+        transition-duration: 0.3s;
+        
+        
+    }
+    
+    .movie:hover{
+        
+        transform: translateY(-3px);
+    }
+    .movie-thumb-container{
+        background-color: #000;
+        position:relative;
+        height:300px;
+        width: 600px;
+        color: #fff;
+        text-align: center;
+    }
+    
+    .movie-thumbnail{
+        position: absolute;
+        top:0;
+        left:0;
+        right: 0;
+        margin: 0;
+        height: 172px;
+    }
+    
+    .movie-info{
+        max-width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        color:#000
+    }
+    
+    .movie-image{
+    
+        height: 100%;    
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+       
+        }
+    
+    .movie-name,.movie-duration,.movie-user-rating,.movie-meta-score{
+        color: #fff;
+        font-weight: 700;
+        font-size: 22px;
+        margin-top: 2px;
+        text-align: center;
+        margin-bottom: 2px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        
+    }
+    .movie-description {
+        max-width: 300px;
+        color: #fff;
+        font-weight: 500;
+        font-size: 18px;
+        margin-top: 20px;
+        text-align: left;
+        margin:auto;
+        padding: 10px;
+        
+
+        
+     
+    }
+    
+    .ratings::ng-deep mwl-gauge{
+        width: 150px;
+        height: 150px;
+        display: block;
+        padding: 10px;
+        
+    }
+    .ratings::ng-deep mwl-gauge.dial{
+        stroke-width: 10;
+    }
+    .ratings::ng-deep mwl-gauge.value{
+        stroke-dasharray: none;
+        stroke-width: 13;
+    }
+    .ratings::ng-deep mwl-gauge.value-text{
+        fill: #fff;
+        font-weight: 700;
+        font-size:24px;
+    }
+
+    .ratings-label{
+        font-size: 20px;
+        color: #fff;
+        position:relative;
+        bottom: 60px;
+        margin-left: 7%;
+    }
+    
+    
+    
+    /* .movie-description{
+        color: #fff;
+    } */
+    
+    
+    
+    
+    
+    
+    

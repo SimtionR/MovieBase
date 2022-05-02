@@ -1,0 +1,68 @@
+<div class="movie">
+    <div class="movie-thumb-container">
+        <img
+            src="{{movie?.moviePhoto}}"
+            alt="thumbnail"
+            class="movie-image"
+        />
+        
+    </div>
+    <div>
+        <div class="movie-info">
+            <p class="movie-name">{{movie?.name}}</p>
+            <p class="movie-duration">Duration: {{movie?.duration}} minutes</p>
+           
+            <div class="movie-description">
+                {{movie?.description}}
+            </div>
+            <div class="ratings">
+                
+                <mwl-gauge
+                class="two"
+                [max]="100"
+                [dialStartAngle]="180"
+                [dialEndAngle]="0"
+                [value]="metaScore"
+                [animated]="true"
+                [color]="getColor"
+                [animationDuration] ="2"
+                >
+                   
+                </mwl-gauge>
+                <p 
+                class="ratings-label"
+                target="_blank"
+                >Meta Score </p>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="actors">
+    <ng-container *ngFor="let actor of movieDetails?.actors">
+        <div class="actor">
+            <div class="actor-thumb-container">
+                <img
+                src="{{actor.photo}}"
+                alt="thumbnail"
+                class="actor-image"
+                />
+            </div>
+
+            <div class="actor-info">
+                <div class="actor-firstname">{{actor.firstName}}
+                    <!-- <p class="box-name">{{response.player.name }}</p> -->
+                </div>
+                <div class="actor-lastname">{{actor.lastName}}</div>
+                <div class="actor-age">{{actor.age}}   
+                    <!-- <p class="box-player-age">Age : {{response.player.age}}</p> -->
+                </div>
+            </div>        
+        </div>
+    </ng-container>
+      
+ 
+</div>

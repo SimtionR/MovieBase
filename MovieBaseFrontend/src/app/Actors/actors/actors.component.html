@@ -1,0 +1,25 @@
+<div class="actors">
+    <ng-container *ngFor="let actor of actors">
+        <div class="actor">
+            <div class="actor-thumb-container">
+                <img
+                src="{{actor.photo}}"
+                alt="thumbnail"
+                class="actor-image"
+                />
+            </div>
+
+            <div class="actor-info">
+                <div class="actor-firstname">{{actor.firstName}}
+                    <!-- <p class="box-name">{{response.player.name }}</p> -->
+                </div>
+                <div class="actor-lastname">{{actor.lastName}}</div>
+                <div class="actor-age">{{actor.age}}   
+                    <!-- <p class="box-player-age">Age : {{response.player.age}}</p> -->
+                </div>
+            </div>        
+        </div>
+    </ng-container>
+      
+ 
+</div>
