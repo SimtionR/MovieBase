@@ -58,6 +58,13 @@ namespace MovieBase.API.Controllers
                 return Unauthorized();
             }
 
+            if(user.Profile == null)
+            {
+                var profile = await _mediator.Send(new AddProfileCommand { User = user });
+                if (profile == null)
+                    return BadRequest();
+            }
+
             var result = await _mediator.Send
                 (new LoginUserCommand { Secret = _appSettings.Value.Secret, UserId = user.Id.ToString() });
 

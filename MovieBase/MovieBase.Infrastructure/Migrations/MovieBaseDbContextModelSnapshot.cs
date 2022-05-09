@@ -183,6 +183,10 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Property<int>("PersonalDetailsId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Photo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MovieDetailsId");
@@ -365,9 +369,6 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Property<int?>("FilmographyId3")
                         .HasColumnType("int");
 
-                    b.Property<int>("MovieDetailsId")
-                        .HasColumnType("int");
-
                     b.Property<string>("MoviePhoto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -476,11 +477,21 @@ namespace MovieBase.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<Guid>("ProfilePictureName")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Profiles");
                 });
@@ -526,9 +537,6 @@ namespace MovieBase.Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -746,6 +754,17 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Navigation("Actor");
                 });
 
+            modelBuilder.Entity("MovieBase.Core.Models.Profile", b =>
+                {
+                    b.HasOne("MovieBase.Core.Models.User", "User")
+                        .WithOne("Profile")
+                        .HasForeignKey("MovieBase.Core.Models.Profile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MovieBase.Core.Models.UserReview", b =>
                 {
                     b.HasOne("MovieBase.Core.Models.MovieDetails", null)
@@ -815,6 +834,12 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("WatctList");
+                });
+
+            modelBuilder.Entity("MovieBase.Core.Models.User", b =>
+                {
+                    b.Navigation("Profile")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -45,7 +45,7 @@ namespace MovieBase.API.Controllers
      
         [HttpGet]
         [Route("actorId/{actorId}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<ActorResponseModel>> GetActorById(int actorId)
         {
             var result = await _mediator.Send(new GetActorByIdQuery { ActorId = actorId });

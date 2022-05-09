@@ -17,9 +17,11 @@ namespace MovieBase.Infrastructure.Repositoriers
     public class IdentityRepository : IIdentityRepository
     {
         private readonly UserManager<User> _userMananger;
+    
         public IdentityRepository(UserManager<User> userManager)
         {
             _userMananger = userManager;
+            
         }
         public async Task<bool> CheckPasswordAsync(User user, string password)
         {
@@ -31,6 +33,7 @@ namespace MovieBase.Infrastructure.Repositoriers
         public async Task<IdentityResult> CreateUserAsync(User user, string password)
         {
            var result = await _userMananger.CreateAsync(user, password);
+            
 
             return result;
         }

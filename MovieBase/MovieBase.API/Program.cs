@@ -70,6 +70,7 @@ builder.Services.AddTransient<IGenreRepository, GenreRepository>();
 builder.Services.AddTransient<IPersonalDetailsRepository, PersonalDetailsRepository>();
 builder.Services.AddTransient<IMovieDetailsRepository, MovieDetailsRepository>();
 builder.Services.AddTransient<IIdentityRepository, IdentityRepository>();
+builder.Services.AddTransient<IProfileRepository, ProfileRepository>();
 
 
 

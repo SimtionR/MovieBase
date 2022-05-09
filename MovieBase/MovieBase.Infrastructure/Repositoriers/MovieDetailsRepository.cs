@@ -35,7 +35,7 @@ namespace MovieBase.Infrastructure.Repositoriers
 
             var movie = _ctx.Movies.Where(m => m.Id == movieDetails.MovieId).FirstOrDefault();
             _ctx.Update(movie.MovieDetails = movieDetails);
-            _ctx.Update(movie.MovieDetailsId = movieDetails.Id);
+           // _ctx.Update(movie.MovieDetailsId = movieDetails.Id);
 
             await _ctx.SaveChangesAsync();
 
@@ -47,7 +47,7 @@ namespace MovieBase.Infrastructure.Repositoriers
 
         public async Task<MovieDetails> GetMovieDetailsByMovieAsync(int movieId)
         {
-            return await _ctx.MovieDetails.Where(m => m.MovieId == movieId).FirstOrDefaultAsync();
+            return await _ctx.MovieDetails.Include(m=> m.Actors).Include(m=> m.Genres).Where(m => m.MovieId == movieId).FirstOrDefaultAsync();
         }
     }
 }

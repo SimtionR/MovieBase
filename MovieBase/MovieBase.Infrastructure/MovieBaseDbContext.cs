@@ -35,10 +35,22 @@ namespace MovieBase.Infrastructure
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<User>()
+                .HasOne(u => u.Profile)
+                .WithOne(p => p.User)
+                .HasForeignKey<Profile>(p => p.UserId);
+                
+
             builder.Entity<Movie>()
                 .HasOne(m => m.MovieDetails)
                 .WithOne(m => m.Movie)
                 .HasForeignKey<MovieDetails>(m => m.MovieId);
+
+            builder.Entity<MovieDetails>()
+                .HasMany(m => m.Actors);
+
+            builder.Entity<MovieDetails>()
+                .HasMany(m=> m.Genres);
 
             builder.Entity<Actor>()
                 .HasOne(p => p.PersonalDetails)

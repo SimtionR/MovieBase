@@ -26,7 +26,7 @@ namespace MovieBase.API.Controllers
         }
 
         [HttpGet]
-        [Route("movieDetais/{movieId}")]
+        [Route("movieDetails/{movieId}")]
         public async Task<ActionResult<MovieDetailsResponseModel>> GetMovieDetailsByMovieId(int movieId)
         {
             var result = await _mediator.Send(new GetMovieDetailsByMovieQuery() { MovieId = movieId });

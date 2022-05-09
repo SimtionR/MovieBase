@@ -9,6 +9,7 @@ namespace MovieBase.Core.RequestModels
     public class ActorRequestModel
     {
         public string FirstName { get; set; }
+        public string Photo { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
     }

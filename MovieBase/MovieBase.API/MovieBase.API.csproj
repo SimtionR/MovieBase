@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<InternalsVisibleTo Include ="MovieBase.IntegrationTests"/>
     <ProjectReference Include="..\MovieBase.Application\MovieBase.Application.csproj" />
     <ProjectReference Include="..\MovieBase.Infrastructure\MovieBase.Infrastructure.csproj" />
   </ItemGroup>

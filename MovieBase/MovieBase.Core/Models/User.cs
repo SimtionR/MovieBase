@@ -9,6 +9,7 @@ namespace MovieBase.Core.Models
 {
     public class User :IdentityUser
     {
-        public int ProfileId { get; set; }
+        
+        public Profile Profile { get; set; }
     }
 }
