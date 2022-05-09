@@ -20,7 +20,7 @@ export class AuthService {
     return this.http.post(this.registerPath, data);
   }
 
-  saveToken(token: any){
+  saveToken(token: string){
     localStorage.setItem('token', token);
   }
 

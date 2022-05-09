@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Identity/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { RegisterComponent } from './Identity/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +21,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
+import { AuthService } from './Identity/authService/auth.service';
+import {AuthGuardService} from './Identity/auth-guard.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +52,15 @@ import {MatDividerModule} from '@angular/material/divider';
     MatButtonModule,
     MatDividerModule
   ],
-  providers: [],
+  providers: [
+    AuthService, 
+    AuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

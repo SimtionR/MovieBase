@@ -27,6 +27,14 @@ export interface MovieDetails{
 
 }
 
+export interface Profile{
+    id:number;
+    userName:string;
+    profilePicture:string;
+    watchList:Movie[];
+    playList:Movie[];
+}
+
 export interface Genres{
 
 }
@@ -34,6 +42,8 @@ export interface Genres{
 export interface ApiResponse<T> {
     results: Array<T>;
 }
+
+
 
 
 
