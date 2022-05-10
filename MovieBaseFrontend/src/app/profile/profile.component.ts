@@ -6,6 +6,7 @@ import { ProfileService } from './profile.service';
 
 
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -14,6 +15,7 @@ import { ProfileService } from './profile.service';
 export class ProfileComponent implements OnInit {
  
   profile: Profile;
+
 
   constructor(private router: Router,
               private profileSerice: ProfileService){
@@ -25,10 +27,46 @@ export class ProfileComponent implements OnInit {
     this.profileSerice.getProfileByUserId().subscribe(p =>
       {
         this.profile = p;
-        console.log(p);
+        
       })
   }
+
+  
    
+  openMovieDetails(id: number)
+  {
+    this.router.navigate(['movieDetails/', id]);
+  }
+
+  removeFromWatchList(movieId: number)
+  {
+    
+    this.profileSerice.removeMovieFromWatchList(movieId).subscribe(p =>
+      {
+        if(p == true)
+        {
+          console.log("works");
+          
+        }
+        console.log("did not work");
+      })
+      console.log('aaaaa');
+      this.ngOnInit();
+  }
+
+  removeFromPlayList(movieId:number)
+  {
+    this.profileSerice.removeFromPlayList(movieId).subscribe(p =>
+      {
+        if(p ===true)
+        {
+          console.log("works");
+         
+        }
+        console.log("did not work");
+      })
+     
+  }
 
 
 }

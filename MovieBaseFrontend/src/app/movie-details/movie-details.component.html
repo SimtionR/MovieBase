@@ -5,6 +5,14 @@
             alt="thumbnail"
             class="movie-image"
         />
+        <button mat-button class="watchList-button" (click)="addToWatchList(movie?.id)" >
+            <mat-icon>add</mat-icon>
+            <span class="menu-text">Add to WatchList</span>
+        </button>
+        <button mat-button class="watchList-button" (click)="addToPlayList(movie?.id)">
+            <mat-icon>add</mat-icon>
+            <span class="menu-text">Add to PlayList</span>
+        </button>
         
     </div>
     <div>

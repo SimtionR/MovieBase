@@ -1,9 +1,9 @@
 <div class="container-fluid">
     <div class="col-md-6 offset-md-4">
         <div class="card" style="width: 18rem;">
-            <img [src]="" class="card-img-top" alt="...">
+            <img [src]="profile?.pictureName" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">DSADSA DASDAS  </h5>
+              <h5 class="card-title">{{profile?.userName }} </h5>
               <p class="card-text">About : </p>
               <!-- <a (click)="viewPosts()" class="btn btn-primary">View posts</a> -->
               
@@ -13,7 +13,44 @@
     
     
 </div>
+<p>WatchList</p>
+<carousel [cellsToShow]="4" [height]="250"
+  >
+  <ng-container *ngFor ="let movie of profile?.watctList">
+    <div class="carousel-cell">
+      <div class="movie-thumb-container" (click)="openMovieDetails(movie.id)">
+        <img
+            src="{{movie?.moviePhoto}}"
+            alt="thumbnail"
+            class="movie-image"
+        />     
+    </div>
+    <button mat-button class="watchList-button" (click)="removeFromWatchList(movie.id)">
+      <mat-icon>remove</mat-icon>
+      <span class="menu-text">Remove From WatchList</span>
+  </button>
+    </div>
+  </ng-container>
+  
+</carousel>
 
-<div class="cotaniner-fluid">
-    
-</div>
+
+<p>Watched Movies</p>
+<carousel [cellsToShow]="4" [height]="250">
+  <ng-container *ngFor ="let movie of profile?.playList">
+    <div class="carousel-cell" >
+      <div class="movie-thumb-container"(click)="openMovieDetails(movie.id)">
+        <img
+            src="{{movie?.moviePhoto}}"
+            alt="thumbnail"
+            class="movie-image"
+        />
+        
+    </div>
+    <button mat-button class="watchList-button" (click)="removeFromPlayList(movie.id)" >
+      <mat-icon>remove</mat-icon>
+      <span class="menu-text">Remove From PlayList</span>
+  </button>
+    </div>
+  </ng-container>
+</carousel>

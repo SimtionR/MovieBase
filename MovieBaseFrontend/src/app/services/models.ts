@@ -30,8 +30,8 @@ export interface MovieDetails{
 export interface Profile{
     id:number;
     userName:string;
-    profilePicture:string;
-    watchList:Movie[];
+    pictureName:string;
+    watctList:Movie[];
     playList:Movie[];
 }
 

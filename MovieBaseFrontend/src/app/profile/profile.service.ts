@@ -21,5 +21,26 @@ export class ProfileService {
     return this.http.get<Profile>(this.profilePath + 'userProfile');
   }
 
+  removeMovieFromWatchList(movieId: number) : Observable<boolean>
+  {
+    return this.http.patch<boolean>(this.profilePath + `removeFromWatchList/${movieId}`, null);
+    
+  }
+
+  removeFromPlayList(movieId:number) :Observable<boolean>
+  {
+    return this.http.patch<boolean>(this.profilePath + `removeFromPlayList/${movieId}`, null);
+  }
+
+  addToPlayList(movieId:number) : Observable<boolean>
+  {
+    return this.http.patch<boolean>(this.profilePath + `addToPlayList/${movieId}`, null);
+  }
+
+  addToWatchList(movieId:number) : Observable<boolean>
+  {
+    return this.http.patch<boolean>(this.profilePath + `addToWatchList/${movieId}`, null);
+  }
+
   
 }

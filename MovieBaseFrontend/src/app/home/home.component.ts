@@ -17,20 +17,11 @@ export class HomeComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.movieService.getMovies().subscribe( m =>
-     {
-       this.movies = m;
-       console.log(m);
-
-     })
+    
     
   }
 
-  openMovieDetails(id: number)
-  {
-    this.router.navigate(['movieDetails/', id]);
-  }
-
+ 
   
   
   

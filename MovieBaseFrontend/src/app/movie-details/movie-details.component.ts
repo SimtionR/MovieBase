@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ProfileService } from '../profile/profile.service';
 import { Movie, MovieDetails } from '../services/models';
 import { MovieService } from '../services/movie.service';
 
@@ -16,7 +17,8 @@ export class MovieDetailsComponent implements OnInit {
   public metaScore:number =0;
 
   constructor(private movieService: MovieService,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.movieId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -44,8 +46,37 @@ export class MovieDetailsComponent implements OnInit {
       return '#f7aa38';
     } else {
       return '#ef4655';
-    }
+    } 
 
+  }
+
+  addToWatchList(movieId:any){
+    this.profileService.addToWatchList(movieId).subscribe(
+      x => {
+        if(x == true)
+        {
+          console.log("added");
+          
+        }
+        console.log("not added");
+      }
+      
+    );
+    this.ngOnInit();
+  }
+
+  addToPlayList(movieId:any){
+    this.profileService.addToPlayList(movieId).subscribe(
+      x => {
+        if(x == true)
+        {
+          console.log("added");
+         
+        }
+        console.log("not added");
+      }
+    );
+    this.ngOnInit();
   }
 
 }

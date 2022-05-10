@@ -1,29 +1,15 @@
-
-
-<div class="filters">
-    <mat-form-field>
-        <mat-label>Sort</mat-label>
-        <mat-select
-            panelClass="sort-select"
-            [(ngModel)]= "sort"
-        >
-         <mat-option value="metaScore">Meta Score</mat-option>
-         <mat-option value="userRating">User Rating</mat-option>
-         <mat-option value="dateReleased">Date Released</mat-option>
-       
-        </mat-select>
-    </mat-form-field>
-</div>
-<app-movie></app-movie>
-<!-- <div class="movies">
+<div class="movies">
     <ng-container *ngFor="let movie of movies">
         <div class="movie" (click)="openMovieDetails(movie.id)">
             <div class="movie-thumb-container">
+                
                 <img
                     src="{{movie.moviePhoto}}"
                     alt="thumbnail"
                     class="movie-image"
+                    
                 />
+                
                 
             </div>
             <div>
@@ -34,9 +20,11 @@
                         {{movie.description}}
                     </div>
                 </div>
+            
             </div>
         </div>
+        
     </ng-container>
    
     
-</div> -->
+</div>

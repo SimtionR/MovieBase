@@ -24,6 +24,11 @@ import {MatDividerModule} from '@angular/material/divider';
 import { AuthService } from './Identity/authService/auth.service';
 import {AuthGuardService} from './Identity/auth-guard.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { SharedModule } from '../shared/shared.module';
+import { ProfileComponent } from './profile/profile.component'
+import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { NgImageSliderModule } from 'ng-image-slider';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +37,9 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     SearchBarComponent,
     HomeComponent,
     ActorsComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    ProfileComponent,
+ 
   ],
   imports: [
     BrowserModule,
@@ -45,12 +52,14 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     GaugeModule.forRoot(),
     MatFormFieldModule,
     MatTabsModule,
-    MatIconModule,
     MatSelectModule,
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    SharedModule,
+    NgImageSliderModule,
+    IvyCarouselModule
   ],
   providers: [
     AuthService, 
