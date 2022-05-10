@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using MovieBase.API.Contracts.RequestModels;
 using MovieBase.Application.Commands;
 using MovieBase.Application.Queries;
+using MovieBase.Application.Queries.IdentityQueries;
 using MovieBase.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,15 @@ namespace MovieBase.API.Controllers
 
             var result = await _mediator.Send
                 (new LoginUserCommand { Secret = _appSettings.Value.Secret, UserId = user.Id.ToString() });
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("user/{userId}")]
+        public async Task<User> GetUserByUserId(string userId)
+        {
+            var result = await _mediator.Send(new GetUserByUserIdQuery { UserId = userId });
 
             return result;
         }
