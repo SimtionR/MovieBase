@@ -44,7 +44,8 @@ namespace MovieBase.Infrastructure
             builder.Entity<Movie>()
                 .HasOne(m => m.MovieDetails)
                 .WithOne(m => m.Movie)
-                .HasForeignKey<MovieDetails>(m => m.MovieId);
+                .HasForeignKey<MovieDetails>(m => m.MovieId)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.Entity<MovieDetails>()
                 .HasMany(m => m.Actors);

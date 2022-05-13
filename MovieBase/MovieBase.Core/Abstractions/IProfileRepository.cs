@@ -13,5 +13,9 @@ namespace MovieBase.Core.Abstractions
         Task<Profile> GetProfileByUserId(string userId);
         Task<Profile> GetProfileByProfileId(int profileId);
         Task<bool> UpdateProfilePicture(string userId);
+        Task<bool> AddToWatchLsit(int movieId, string userId);
+        Task<bool> AddToPlayList(int movieId, string userId);
+        Task<bool> RemoveFromWatchList(int movieId, string userId);
+        Task<bool> RemoveFromPlayList(int movieId, string userId);
     }
 }

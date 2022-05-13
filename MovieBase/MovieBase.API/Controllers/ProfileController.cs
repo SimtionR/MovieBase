@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
+using Azure.Storage.Blobs;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MovieBase.API.Contracts.RequestModels;
 using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.Application.Commands.ProfileCommands;
 using MovieBase.Application.Queries;
 using MovieBase.Application.Queries.ProfileQueries;
 using MovieBase.Core.Models;
+using MovieBase.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +21,19 @@ using System.Threading.Tasks;
 
 namespace MovieBase.API.Controllers
 {
-    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ProfileController : ApiController
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        private UserManager<User> _userMananger;
-        public ProfileController(IMediator mediator, IMapper mapper, UserManager<User> userManager)
+        private IBlobStorageService _blobService;
+        private readonly string blobCotnainer = "profilepictures";
+
+        public ProfileController(IMediator mediator, IMapper mapper, IBlobStorageService blobStorageService)
         {
             _mediator = mediator;
             _mapper = mapper;
-            _userMananger = userManager;
+            _blobService = blobStorageService;
         }
 
         [HttpGet]
@@ -40,7 +45,7 @@ namespace MovieBase.API.Controllers
 
             var result = await _mediator.Send(new GetProfileByUserIdQuery { userId = userId });
 
-            if(result == null)
+            if (result == null)
             {
                 return NotFound();
             }
@@ -55,7 +60,7 @@ namespace MovieBase.API.Controllers
         {
             var result = await _mediator.Send(new GetProfileByProfileIdQuery { profileId = profileId });
 
-            if(result == null)
+            if (result == null)
             {
                 return NotFound();
             }
@@ -65,7 +70,7 @@ namespace MovieBase.API.Controllers
 
         [HttpPatch]
         [Route("addToWatchList/{movieId}")]
-        public async Task<ActionResult> AddToWatchList(int movieId)
+        public async Task<ActionResult<bool>> AddToWatchList(int movieId)
         {
             var userId = User.FindFirstValue(ClaimTypes.Name);
 
@@ -73,55 +78,43 @@ namespace MovieBase.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if(result == true)
-            {
-                return Ok();
-            }
-            return BadRequest("Movie already in WatchList");
+            return result;
         }
 
         [HttpPatch]
         [Route("removeFromWatchList/{movieId}")]
-        public async Task<ActionResult> RemoveFromWatchList(int movieid)
+        public async Task<ActionResult<bool>> RemoveFromWatchList(int movieid)
         {
             var userId = User.FindFirstValue(ClaimTypes.Name);
 
-            var command = new RemoveWatchListMovieFromProfileCommand { MovieId=movieid, UserId = userId };
+            var command = new RemoveWatchListMovieFromProfileCommand { MovieId = movieid, UserId = userId };
 
             var result = await _mediator.Send(command);
 
-            if(result)
-            {
-                return Ok();
-            }
-            return BadRequest("Movie is not in WatchList");
+            return result;
+
 
 
         }
 
         [HttpPatch]
         [Route("removeFromPlayList/{movieId}")]
-        public async Task<ActionResult> RemoveFromPlayList(int movieId)
+        public async Task<ActionResult<bool>> RemoveFromPlayList(int movieId)
         {
             var userId = User.FindFirstValue(ClaimTypes.Name);
 
-            var command = new RemovePlayListMovieFromProfileCommand { MovieId = movieId, UserId=userId };
+            var command = new RemovePlayListMovieFromProfileCommand { MovieId = movieId, UserId = userId };
 
             var result = await _mediator.Send(command);
 
-            if(result)
-            {
-                return Ok();
-            }
-
-            return BadRequest("Movie is not in PlayList");
+            return result;
         }
-       
+
 
 
         [HttpPatch]
         [Route("addToPlayList/{movieId}")]
-        public async Task<ActionResult> AddToPlayList(int movieId)
+        public async Task<ActionResult<bool>> AddToPlayList(int movieId)
         {
             var userId = User.FindFirstValue(ClaimTypes.Name);
 
@@ -129,12 +122,31 @@ namespace MovieBase.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result == true)
-            {
-                return Ok();
-            }
-
-            return BadRequest();
+            return result;
         }
+
+        [HttpGet]
+        [Route("getProfilePicture/{name}")]
+        public async Task<ActionResult> GetProfilePicutre(string name)
+        {
+
+            var data = await _blobService.GetBlobAsync(name, blobCotnainer);
+            return File(data.Content, data.ContentType);
+        }
+
+        [HttpPost]
+        [Route("uploadContent")]
+        public Task<ActionResult> UploadProfilePicture(IFormFile file)
+        {
+            return null; 
+        }
+        [HttpPost]
+        [Route("uploadProfilePicture")]
+        public async Task<ActionResult> UploadProfilePicture([FromBody] UploadFileRequestModel request)
+        {
+            await _blobService.UploadFileBlobAsync(request.FilePath, request.FileName, blobCotnainer);
+            return Ok();
+        }
+       
     }
 }

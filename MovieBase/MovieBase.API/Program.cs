@@ -1,7 +1,9 @@
+using Azure.Storage.Blobs;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.IdentityModel.Tokens;
 using MovieBase.API;
 using MovieBase.Application.Queries;
@@ -9,6 +11,7 @@ using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
 using MovieBase.Infrastructure.Repositoriers;
+using MovieBase.Infrastructure.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +34,12 @@ builder.Services.Configure<ApplicationSettings>(appSettingsConfiguration);
 
 var appSettings = appSettingsConfiguration.Get<ApplicationSettings>();
 var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+
+var azureConnectionString = builder.Configuration.GetValue<string>("AzureBlobStorageConnectionString");
+builder.Services.AddSingleton(x => new BlobServiceClient(azureConnectionString));
+
+
 
 builder.Services.AddAuthentication(x =>
 {
@@ -71,6 +80,8 @@ builder.Services.AddTransient<IPersonalDetailsRepository, PersonalDetailsReposit
 builder.Services.AddTransient<IMovieDetailsRepository, MovieDetailsRepository>();
 builder.Services.AddTransient<IIdentityRepository, IdentityRepository>();
 builder.Services.AddTransient<IProfileRepository, ProfileRepository>();
+builder.Services.AddTransient<IUserReviewRepository, UserReviewRepository>();
+builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 
 
 

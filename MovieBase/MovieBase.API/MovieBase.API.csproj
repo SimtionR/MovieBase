@@ -17,12 +17,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-	<InternalsVisibleTo Include ="MovieBase.IntegrationTests"/>
+	<InternalsVisibleTo Include="MovieBase.IntegrationTests" />
     <ProjectReference Include="..\MovieBase.Application\MovieBase.Application.csproj" />
     <ProjectReference Include="..\MovieBase.Infrastructure\MovieBase.Infrastructure.csproj" />
   </ItemGroup>

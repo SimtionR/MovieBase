@@ -271,6 +271,12 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Property<int>("CriticId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Dislikes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MovieDetailsId")
                         .HasColumnType("int");
 
@@ -572,6 +578,12 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Property<DateTime>("CommentDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Dislikes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MovieDetailsId")
                         .HasColumnType("int");
 
@@ -737,7 +749,7 @@ namespace MovieBase.Infrastructure.Migrations
                     b.HasOne("MovieBase.Core.Models.Movie", "Movie")
                         .WithOne("MovieDetails")
                         .HasForeignKey("MovieBase.Core.Models.MovieDetails", "MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Movie");

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MovieBase.API;
@@ -17,10 +18,12 @@ namespace MovieBase.Infrastructure.Repositoriers
     public class IdentityRepository : IIdentityRepository
     {
         private readonly UserManager<User> _userMananger;
+        private readonly MovieBaseDbContext _ctx;
     
-        public IdentityRepository(UserManager<User> userManager)
+        public IdentityRepository(UserManager<User> userManager, MovieBaseDbContext ctx)
         {
             _userMananger = userManager;
+            _ctx = ctx;
             
         }
         public async Task<bool> CheckPasswordAsync(User user, string password)
@@ -40,8 +43,13 @@ namespace MovieBase.Infrastructure.Repositoriers
 
         public async Task<User> FindByNameAsync(string username)
         {
-            var user = await _userMananger.FindByNameAsync(username);
+            var user = await _ctx.Users.Include(u => u.Profile).Where(u => u.UserName == username).FirstOrDefaultAsync();
             return user; 
+        }
+
+        public async Task<User> GetUserByUserId(string userId)
+        {
+            return await _ctx.Users.Include(u=> u.Profile).Where(u => u.Id == userId).FirstOrDefaultAsync();
         }
 
         public async Task<object> LoginUser(string secret, string userId)

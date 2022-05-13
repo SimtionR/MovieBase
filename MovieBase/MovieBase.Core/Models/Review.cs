@@ -14,5 +14,7 @@ namespace MovieBase.Core.Models
         public DateTime CommentDate { get; set; }
         public int MovieId { get; set; }
         public Movie MovieReviewd { get; set; }
+        public int Likes { get; set; }
+        public int Dislikes { get; set; }
     }
 }

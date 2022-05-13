@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.API.RequestModels;
 using MovieBase.Application.Commands;
+using MovieBase.Application.Commands.MovieCommands;
 using MovieBase.Application.Queries;
 using MovieBase.Core.Models;
 using MovieBase.Core.RequestModels;
@@ -15,14 +16,14 @@ using System.Threading.Tasks;
 
 namespace MovieBase.API.Controllers
 {
-    public class MovieController: ApiController
+    public class MovieController : ApiController
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
         public MovieController(IMediator mediator, IMapper mapper)
         {
-            _mediator = mediator; 
+            _mediator = mediator;
             _mapper = mapper;
         }
 
@@ -33,21 +34,21 @@ namespace MovieBase.API.Controllers
             var result = await _mediator.Send(new GetAllMoviesQuery());
 
             var movieResponseList = new List<MovieResponseModel>();
-            
-            foreach(var movie in result)
+
+            foreach (var movie in result)
             {
                 var movieResponse = _mapper.Map<MovieResponseModel>(movie);
                 movieResponseList.Add(movieResponse);
             }
 
             return movieResponseList;
-           
+
         }
         [HttpGet]
         [Route("movieId/{movieId}")]
         public async Task<ActionResult<MovieResponseModel>> GetMovieById(int movieId)
         {
-            var result = await _mediator.Send(new GetMovieByIdQuery { MovieId = movieId});
+            var result = await _mediator.Send(new GetMovieByIdQuery { MovieId = movieId });
             if (result != null)
                 return _mapper.Map<MovieResponseModel>(result);
 
@@ -58,7 +59,7 @@ namespace MovieBase.API.Controllers
         [Route("addMovie")]
         public async Task<ActionResult<MovieResponseModel>> AddMovie(MovieRequestModel movieModel)
         {
-            
+
             var movieCommand = _mapper.Map<AddMovieCommand>(movieModel);
 
             var result = await _mediator.Send(movieCommand);
@@ -68,6 +69,15 @@ namespace MovieBase.API.Controllers
 
             return movieResposne;
 
+        }
+
+        [HttpDelete]
+        [Route("deleteMovie/{movieId}")]
+        public async Task<ActionResult<bool>> DeleteMovie(int movieId)
+        {
+            var result = await _mediator.Send(new DeleteMovieCommand { MovieId=movieId });
+
+            return result;
         }
 
        

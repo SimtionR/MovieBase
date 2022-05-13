@@ -13,5 +13,6 @@ namespace MovieBase.Core.Abstractions
         Task<IEnumerable<Movie>> GetAllMoviesAsync();
         Task<Movie> GetMovieByIdAsync(int id);
         Task<Movie> GetMovieByRecommandation(UserPreferences userPreferences, Profile profile);
+        Task<bool> DeleteMovie(int movieId);
     }
 }

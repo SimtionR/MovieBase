@@ -13,10 +13,12 @@ namespace MovieBase.Infrastructure.Repositoriers
     public class MovieRepository : Core.Abstractions.IMovieRepository
     {
         private readonly MovieBaseDbContext _ctx;
+        private readonly IMovieDetailsRepository _movieDetailsRepo;
 
-        public MovieRepository(MovieBaseDbContext ctx)
+        public MovieRepository(MovieBaseDbContext ctx, IMovieDetailsRepository movieDetailsRepo)
         {
             _ctx = ctx;
+            _movieDetailsRepo = movieDetailsRepo;
         }
 
         public async Task<Movie> CreateMovieAsync(Movie movie)
@@ -25,6 +27,29 @@ namespace MovieBase.Infrastructure.Repositoriers
             await _ctx.SaveChangesAsync();
 
             return movie;
+        }
+
+        public async Task<bool> DeleteMovie(int movieId)
+        {
+            var movieToDelete = await GetMovieByIdAsync(movieId);
+
+            if (movieToDelete != null)
+            {
+                var movieDetailsToRemove = await _movieDetailsRepo.GetMovieDetailsByMovieAsync(movieId);
+
+                if(movieDetailsToRemove!=null)
+                {
+                    _ctx.MovieDetails.Remove(movieDetailsToRemove);
+                    await _ctx.SaveChangesAsync();
+                }
+               
+
+                _ctx.Movies.Remove(movieToDelete);
+                await _ctx.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<IEnumerable<Movie>> GetAllMoviesAsync()
