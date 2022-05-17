@@ -55,5 +55,21 @@ namespace MovieBase.API.Controllers
 
             return _mapper.Map<UserReviewResponseModel>(result);
         }
+        [HttpGet]
+        [Route("reviews/{movieId}")]
+        public async Task<IEnumerable<UserReviewResponseModel>> GetReviewsByMovieId(int movieId)
+        {
+            var command = new GetReviewsByMovieIdQuery { MovieId = movieId };
+            var result = await _mediator.Send(command);
+
+            var userReviewList = new List<UserReviewResponseModel>();
+            foreach(var review in result)
+            {
+                var userReviewResponse = _mapper.Map<UserReviewResponseModel>(review);
+                userReviewList.Add(userReviewResponse);
+            }
+
+            return userReviewList;
+        }
     }
 }

@@ -63,6 +63,10 @@ namespace MovieBase.Infrastructure
                 .WithOne(a => a.Actor)
                 .HasForeignKey<Filmography>(a => a.ActorId);
 
+            builder.Entity<UserReview>()
+                .HasOne(u => u.Profile);
+                
+
             
                 
                     

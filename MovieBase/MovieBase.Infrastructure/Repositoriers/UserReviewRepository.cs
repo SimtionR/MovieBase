@@ -49,14 +49,20 @@ namespace MovieBase.Infrastructure.Repositoriers
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<UserReview>> GetAllReviewsByMovieIdAsync(int movieId)
+        public async Task<IEnumerable<UserReview>> GetAllReviewsByMovieIdAsync(int movieId)
+        {
+            var userReviews = await _ctx.UserReviews.Include(u => u.Profile).Where(u => u.MovieId == movieId).ToListAsync();
+            return userReviews;
+        }
+
+        public async Task<IEnumerable<UserReview>> GetAllReviewsMyMovieDetailsIdAsync(int movieDetails)
         {
             throw new NotImplementedException();
         }
 
         public async Task<UserReview> GetReviewByIdAsync(int reviewId)
         {
-            var review = await _ctx.UserReviews.Where(r => r.Id == reviewId).FirstOrDefaultAsync();
+            var review = await _ctx.UserReviews.Include(u => u.Profile).Where(r => r.Id == reviewId).FirstOrDefaultAsync();
             return review;
         }
 

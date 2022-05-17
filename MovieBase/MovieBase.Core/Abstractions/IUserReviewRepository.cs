@@ -17,5 +17,6 @@ namespace MovieBase.Core.Abstractions
         Task<UserReview> GetReviewByIdAsync(int reviewId);
         Task<IEnumerable<UserReview>> GettAllReviewsByUserIdAsync(string userId);
         Task<IEnumerable<UserReview>> GetAllReviewsByMovieIdAsync(int movieId);
+        Task<IEnumerable<UserReview>> GetAllReviewsMyMovieDetailsIdAsync(int movieDetails);
     }
 }

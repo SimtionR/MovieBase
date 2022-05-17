@@ -23,6 +23,7 @@ namespace MovieBase.Application.Handlers.ReviewHandlers
         public async Task<UserReview> Handle(AddReviewCommand request, CancellationToken cancellationToken)
         {
             var userReview = _mapper.Map<UserReview>(request);
+            userReview.CommentDate = DateTime.Now;
             return await _repo.CreateUserReviewAsync(userReview);
         }
     }

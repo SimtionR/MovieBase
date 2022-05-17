@@ -11,7 +11,9 @@ namespace MovieBase.API.Contracts.ResponseModels
         public int Id { get; set; }
         public int ProfileId { get; set; }
         public string Title { get; set; }
+        public ProfileResponseModel Profile { get; set; }
         public string RewiewContent { get; set; }
+        public DateTime CommentDate { get; set; }
         public double Rating { get; set; }
         public int MovieId { get; set; }
     }
