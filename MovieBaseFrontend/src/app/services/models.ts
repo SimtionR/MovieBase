@@ -30,9 +30,13 @@ export interface MovieDetails{
 export interface Profile{
     id:number;
     userName:string;
-    pictureName:string;
+    profilePicture:string;
     watctList:Movie[];
     playList:Movie[];
+}
+
+export interface File{
+    
 }
 
 export interface Genres{

@@ -27,7 +27,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 50%;
    
  }
  
@@ -43,6 +43,34 @@
         
     }
 
-.carousel-cell{
-    height:50%;
+.profile-picture
+{
+    height:100px;
+    width: 100%;
+    border-radius: 25%;
+    margin-bottom: 5px;
+}
+
+
+.container-fluid{
+    height: 120px;
+    width: 800px;
+    margin-left: 5%;
+    margin-bottom: 7%;
+    
+    padding: 10px;
+
+}
+
+.card{
+    background-color: #000;
+    width: 100px;
+    float: left;
+    height: 100px;
+}
+.form-group{
+    
+    width: 250px;
+    float: left;
+    height: 200px;
 }

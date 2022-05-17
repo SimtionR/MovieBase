@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ProfileService } from '../profile/profile.service';
 import { Movie, MovieDetails } from '../services/models';
 import { MovieService } from '../services/movie.service';
@@ -18,7 +19,8 @@ export class MovieDetailsComponent implements OnInit {
 
   constructor(private movieService: MovieService,
               private activatedRoute: ActivatedRoute,
-              private profileService: ProfileService) { }
+              private profileService: ProfileService,
+              private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.movieId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -53,12 +55,17 @@ export class MovieDetailsComponent implements OnInit {
   addToWatchList(movieId:any){
     this.profileService.addToWatchList(movieId).subscribe(
       x => {
-        if(x == true)
+        if(x === true)
         {
+          this.toastrService.success("Added to watchlist");
           console.log("added");
           
         }
-        console.log("not added");
+        else{
+          this.toastrService.error("The movie is already in the watchlist");
+          console.log("not added");
+        }
+        
       }
       
     );
@@ -68,12 +75,18 @@ export class MovieDetailsComponent implements OnInit {
   addToPlayList(movieId:any){
     this.profileService.addToPlayList(movieId).subscribe(
       x => {
-        if(x == true)
+        if(x === true)
         {
+          this.toastrService.success("Added to watchlist");
           console.log("added");
          
         }
-        console.log("not added");
+        else{
+          this.toastrService.error("The movie is already in the playlist");
+          console.log("not added");
+          
+        }
+        
       }
     );
     this.ngOnInit();

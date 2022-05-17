@@ -42,5 +42,10 @@ export class ProfileService {
     return this.http.patch<boolean>(this.profilePath + `addToWatchList/${movieId}`, null);
   }
 
+  uploadProfilePicture(file: FormData) :Observable<any>
+  {
+    return this.http.post<any>(this.profilePath+'uploadProfile', file);
+  }
+
   
 }

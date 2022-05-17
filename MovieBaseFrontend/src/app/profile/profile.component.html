@@ -1,15 +1,40 @@
-<div class="container-fluid">
-    <div class="col-md-6 offset-md-4">
-        <div class="card" style="width: 18rem;">
-            <img [src]="profile?.pictureName" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">{{profile?.userName }} </h5>
-              <p class="card-text">About : </p>
-              <!-- <a (click)="viewPosts()" class="btn btn-primary">View posts</a> -->
-              
-            </div>
+<div  class="container-fluid">
+  <!-- <div style="float:left" class="row"> -->
+    <div  class="col-md-6">
+      <div class="card" style="width: 18rem;">
+          <img class="profile-picture" src="{{blob}}">
+          <!-- [src]="profile?.pictureName" class="card-img-top" alt="..."> -->
+          <div class="card-body">
+            <h5 class="card-title">{{profile?.userName }} </h5>
+            <!-- <a (click)="viewPosts()" class="btn btn-primary">View posts</a> -->
+            
           </div>
-    </div>
+        </div>
+  </div>
+  <div class="col-md-6 offset-md-6">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div>
+          <label for="profileImage">Change Profile Image</label>
+        </div>
+
+        <input type="file"
+               name="profileImage"
+               id="profileImage"
+               placeholder="Change Profile Image"
+               (change)="onFileChange($event)">
+      </div>
+      <button type="submit"
+              class="btn btn-primary">Update<i class="fas fa-user-edit"></i></button>
+    </form>
+  </div>
+  <!-- </div> -->
+    
+   <div class="row">
+    
+   </div> 
+
+  
     
     
 </div>

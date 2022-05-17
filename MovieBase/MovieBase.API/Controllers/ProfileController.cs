@@ -10,6 +10,7 @@ using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.Application.Commands.ProfileCommands;
 using MovieBase.Application.Queries;
 using MovieBase.Application.Queries.ProfileQueries;
+using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure.Services;
 using System;
@@ -26,14 +27,18 @@ namespace MovieBase.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        private IBlobStorageService _blobService;
-        private readonly string blobCotnainer = "profilepictures";
+        private readonly IBlobStorageService _blobStorageService;
+        private readonly string _blobCotnaienr = "profilepictures";
+        private readonly IProfileRepository _repo;
+       
 
-        public ProfileController(IMediator mediator, IMapper mapper, IBlobStorageService blobStorageService)
+        public ProfileController(IMediator mediator, IMapper mapper, IBlobStorageService blobStorageService, IProfileRepository repo)
         {
             _mediator = mediator;
             _mapper = mapper;
-            _blobService = blobStorageService;
+            _blobStorageService = blobStorageService;
+            _repo = repo;
+           
         }
 
         [HttpGet]
@@ -124,29 +129,35 @@ namespace MovieBase.API.Controllers
 
             return result;
         }
-
-        [HttpGet]
-        [Route("getProfilePicture/{name}")]
-        public async Task<ActionResult> GetProfilePicutre(string name)
+        [HttpPatch]
+        [Route("updateProfilePicture/{userID}")]
+        public async Task<ActionResult> UpdateProfilePicture(string userID)
         {
+            var test =await _repo.UpdateProfilePicture(userID);
 
-            var data = await _blobService.GetBlobAsync(name, blobCotnainer);
-            return File(data.Content, data.ContentType);
-        }
-
-        [HttpPost]
-        [Route("uploadContent")]
-        public Task<ActionResult> UploadProfilePicture(IFormFile file)
-        {
-            return null; 
-        }
-        [HttpPost]
-        [Route("uploadProfilePicture")]
-        public async Task<ActionResult> UploadProfilePicture([FromBody] UploadFileRequestModel request)
-        {
-            await _blobService.UploadFileBlobAsync(request.FilePath, request.FileName, blobCotnainer);
             return Ok();
         }
-       
+
+        [HttpPost]
+        [Route("uploadProfile")]
+        public async Task<ActionResult> Upload([FromForm] IFormFile file)
+        {
+            var idPart = new string(User.FindFirstValue(ClaimTypes.Name).Take(10).ToArray());
+            var fileName = new StringBuilder("profilepictures").Append(idPart).ToString();
+            
+            await _blobStorageService.UploadFileContent(file, _blobCotnaienr, fileName);
+            return Ok();
+        }
+
+        /*[HttpGet]
+        [Route("getProfilePicture")]
+        public async Task<ActionResult> GetProfilePicture(int )
+        {
+
+        }*/
     }
+
+
+
 }
+

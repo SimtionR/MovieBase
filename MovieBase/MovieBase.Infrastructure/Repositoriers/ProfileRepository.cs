@@ -72,11 +72,14 @@ namespace MovieBase.Infrastructure.Repositoriers
 
         public async Task<Profile> CreateProfileAsync(User user)
         {
+            var idPart = new string(user.Id.Take(10).ToArray());
+            var defaultProfilePicture = new StringBuilder("profilepictures").Append(idPart).ToString();
             var profile = new Profile
             {
                 User = user,
                 UserId = user.Id,
-                UserName = user.UserName
+                UserName = user.UserName,
+                ProfilePicture = defaultProfilePicture
             };
 
             _ctx.Profiles.Add(profile);
@@ -148,13 +151,19 @@ namespace MovieBase.Infrastructure.Repositoriers
 
         public async Task<bool> UpdateProfilePicture(string userId)
         {
-            /*var profileToUpdate = await GetProfileByUserId(userId);
+            var profileToUpdate = await GetProfileByUserId(userId);
+            var idPart = new string(userId.Take(10).ToArray());
+            var defaultProfilePicture = new StringBuilder("profilepictures").Append(idPart).ToString();
 
-            _ctx.Profiles.Update(profileToUpdate.ProfilePictureName)*/
+            profileToUpdate.ProfilePicture = defaultProfilePicture;
 
-            return false;
+            await _ctx.SaveChangesAsync();
+
+            return true;
 
 
         }
+
+        
     }
 }

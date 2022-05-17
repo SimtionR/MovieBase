@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace MovieBase.Infrastructure.Services
         Task UploadFileBlobAsync(string filePath, string fileName, string containerName);
         Task UploadContentBlobAsync(string content, string fileName, string containerName);
         Task DeleteBlobAsync(string blobName, string containerName);
+        Task UploadFileContent(IFormFile file, string containerName, string fileName);
     }
 }
