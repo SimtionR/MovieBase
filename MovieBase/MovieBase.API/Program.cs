@@ -10,6 +10,7 @@ using MovieBase.Application.Queries;
 using MovieBase.Core.Abstractions;
 using MovieBase.Core.Models;
 using MovieBase.Infrastructure;
+using MovieBase.Infrastructure.Hubs;
 using MovieBase.Infrastructure.Repositoriers;
 using MovieBase.Infrastructure.Services;
 using System.Text;
@@ -27,6 +28,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MovieBaseDbContext>((DbContextOptionsBuilder options) =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddSignalR();
 
 //refactor auth
 var appSettingsConfiguration = builder.Configuration.GetSection("ApplicationSettings");
@@ -81,7 +84,9 @@ builder.Services.AddTransient<IMovieDetailsRepository, MovieDetailsRepository>()
 builder.Services.AddTransient<IIdentityRepository, IdentityRepository>();
 builder.Services.AddTransient<IProfileRepository, ProfileRepository>();
 builder.Services.AddTransient<IUserReviewRepository, UserReviewRepository>();
+builder.Services.AddTransient<IChatMessageRepository, ChatMessageRepository>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+builder.Services.AddTransient<IConnectionRepository, ConnectionRepository>();
 
 
 
@@ -107,6 +112,7 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/test");
 
 });
 

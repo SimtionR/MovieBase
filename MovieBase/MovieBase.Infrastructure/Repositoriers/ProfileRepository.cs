@@ -105,6 +105,12 @@ namespace MovieBase.Infrastructure.Repositoriers
             return profile;
         }
 
+        public async Task<IEnumerable<Profile>> GetProfilesBySearchAsync(string search)
+        {
+            var profiles = await _ctx.Profiles.Where(p => p.UserName.Contains(search)).ToListAsync();
+            return profiles;
+        }
+
         public async Task<bool> RemoveFromPlayList(int movieId, string userId)
         {
             var movieToRemove = await _movieRepository.GetMovieByIdAsync(movieId);

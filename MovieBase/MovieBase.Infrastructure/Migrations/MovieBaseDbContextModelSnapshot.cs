@@ -229,6 +229,100 @@ namespace MovieBase.Infrastructure.Migrations
                     b.ToTable("Awards");
                 });
 
+            modelBuilder.Entity("MovieBase.Core.Models.ChatMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("SendOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatMessages");
+                });
+
+            modelBuilder.Entity("MovieBase.Core.Models.Connection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ProfileConnectionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProfilePicture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileUserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("Connections");
+                });
+
+            modelBuilder.Entity("MovieBase.Core.Models.ConnectionPending", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderPhoto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("ConnectionPendings");
+                });
+
             modelBuilder.Entity("MovieBase.Core.Models.Critic", b =>
                 {
                     b.Property<int>("Id")
@@ -503,6 +597,52 @@ namespace MovieBase.Infrastructure.Migrations
                     b.ToTable("Profiles");
                 });
 
+            modelBuilder.Entity("MovieBase.Core.Models.ResponsePending", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PendingId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReceiverName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReceiverPhoto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderPhoto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("ResponsePendings");
+                });
+
             modelBuilder.Entity("MovieBase.Core.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -681,6 +821,31 @@ namespace MovieBase.Infrastructure.Migrations
                         .HasForeignKey("ActorId");
                 });
 
+            modelBuilder.Entity("MovieBase.Core.Models.ChatMessage", b =>
+                {
+                    b.HasOne("MovieBase.Core.Models.User", "Sender")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("MovieBase.Core.Models.Connection", b =>
+                {
+                    b.HasOne("MovieBase.Core.Models.Profile", null)
+                        .WithMany("Connections")
+                        .HasForeignKey("ProfileId");
+                });
+
+            modelBuilder.Entity("MovieBase.Core.Models.ConnectionPending", b =>
+                {
+                    b.HasOne("MovieBase.Core.Models.Profile", null)
+                        .WithMany("ConnectionPendings")
+                        .HasForeignKey("ProfileId");
+                });
+
             modelBuilder.Entity("MovieBase.Core.Models.CriticReview", b =>
                 {
                     b.HasOne("MovieBase.Core.Models.MovieDetails", null)
@@ -778,6 +943,13 @@ namespace MovieBase.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MovieBase.Core.Models.ResponsePending", b =>
+                {
+                    b.HasOne("MovieBase.Core.Models.Profile", null)
+                        .WithMany("ResponsePendings")
+                        .HasForeignKey("ProfileId");
+                });
+
             modelBuilder.Entity("MovieBase.Core.Models.UserReview", b =>
                 {
                     b.HasOne("MovieBase.Core.Models.MovieDetails", null)
@@ -842,9 +1014,15 @@ namespace MovieBase.Infrastructure.Migrations
 
             modelBuilder.Entity("MovieBase.Core.Models.Profile", b =>
                 {
+                    b.Navigation("ConnectionPendings");
+
+                    b.Navigation("Connections");
+
                     b.Navigation("PlayList");
 
                     b.Navigation("Ratings");
+
+                    b.Navigation("ResponsePendings");
 
                     b.Navigation("Reviews");
 
@@ -853,6 +1031,8 @@ namespace MovieBase.Infrastructure.Migrations
 
             modelBuilder.Entity("MovieBase.Core.Models.User", b =>
                 {
+                    b.Navigation("Messages");
+
                     b.Navigation("Profile")
                         .IsRequired();
                 });

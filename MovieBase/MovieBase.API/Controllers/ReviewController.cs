@@ -5,9 +5,11 @@ using MovieBase.API.Contracts.RequestModels;
 using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.Application.Commands.Reviews;
 using MovieBase.Application.Queries.ReviewQueries;
+using MovieBase.Core.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,16 +19,25 @@ namespace MovieBase.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        public ReviewController(IMediator mediator, IMapper mapper)
+        private readonly IProfileRepository _repo;
+        public ReviewController(IMediator mediator, IMapper mapper, IProfileRepository repo)
         {
             _mediator = mediator;
             _mapper = mapper;
+            _repo = repo;
         }
         
         [HttpPost]
         [Route("createUserReview")]
         public async Task<ActionResult<UserReviewResponseModel>> CreateUserReview(UserReviewRequestModel userReviewModel)
         {
+            var userId = User.FindFirstValue(ClaimTypes.Name);
+
+            var profile = await _repo.GetProfileByUserId(userId);
+            var profileId = profile.Id;
+
+            userReviewModel.ProfileId = profileId;
+
             var userReviewCommand = _mapper.Map<AddReviewCommand>(userReviewModel);
 
             var result = await _mediator.Send(userReviewCommand);

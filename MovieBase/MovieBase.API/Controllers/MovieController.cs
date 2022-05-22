@@ -6,6 +6,7 @@ using MovieBase.API.RequestModels;
 using MovieBase.Application.Commands;
 using MovieBase.Application.Commands.MovieCommands;
 using MovieBase.Application.Queries;
+using MovieBase.Application.Queries.MovieQueries;
 using MovieBase.Core.Models;
 using MovieBase.Core.RequestModels;
 using System;
@@ -136,6 +137,25 @@ namespace MovieBase.API.Controllers
 
         }
 
+        [HttpGet]
+        [Route("movieSearch/{search}")]
+        public async Task<IEnumerable<MovieResponseModel>> GetMoviesBySeaarch(string search)
+        {
+            var command = new GetMoviesBySearchQuery { Search = search };
+
+            var resuslt = await _mediator.Send(command);
+
+            var movieResponseList = new List<MovieResponseModel>();
+
+            foreach(var movie in resuslt)
+            {
+                var movieResponse = _mapper.Map<MovieResponseModel>(movie);
+
+                movieResponseList.Add(movieResponse);
+            }
+
+            return movieResponseList;
+        }
     
         /*
        [HttpPost]

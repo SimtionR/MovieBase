@@ -12,5 +12,6 @@ namespace MovieBase.Core.Abstractions
          Task<Actor> CreateActorAsync(Actor actor);
          Task<ICollection<Actor>> GetAllActorsAsync();
          Task<Actor> GetActorByIdAsync(int id);
+         Task<IEnumerable<Actor>> GetActorsBySearchAsync(string search);    
     }
 }

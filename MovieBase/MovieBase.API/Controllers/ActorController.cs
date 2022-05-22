@@ -6,6 +6,7 @@ using MovieBase.API.Contracts.ResponseModels;
 using MovieBase.API.RequestModels;
 using MovieBase.Application.Commands;
 using MovieBase.Application.Queries;
+using MovieBase.Application.Queries.ActorQueries;
 using MovieBase.Core.Models;
 using MovieBase.Core.RequestModels;
 using System;
@@ -72,6 +73,21 @@ namespace MovieBase.API.Controllers
             return _mapper.Map<ActorResponseModel>(result);
         }
 
+        [HttpGet]
+        [Route("actors/{search}")]
+        public async Task<IEnumerable<ActorResponseModel>> GetActorsBySearch(string search)
+        {
+            var command = new GetActorsBySearchQuery { Search = search };
+            var result = await _mediator.Send(command); 
+            var actorResponseList = new List<ActorResponseModel>();
+
+            foreach(var actor in result)
+            {
+                actorResponseList.Add(_mapper.Map<ActorResponseModel>(actor));
+            }
+
+            return actorResponseList;
+        }
 
 
 

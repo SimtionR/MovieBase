@@ -17,5 +17,6 @@ namespace MovieBase.Core.Abstractions
         Task<bool> CheckPasswordAsync(User user, string password);
         Task<IdentityResult> CreateUserAsync(User user, string password);
         Task<User> GetUserByUserId(string userId);  
+        //Task<IEnumerable<User>> GetUsersBySearch(string search);
     }
 }

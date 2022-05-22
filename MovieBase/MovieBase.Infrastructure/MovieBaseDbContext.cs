@@ -13,12 +13,12 @@ namespace MovieBase.Infrastructure
 
     {
 
-        public MovieBaseDbContext(DbContextOptions options): base (options)
+        public MovieBaseDbContext(DbContextOptions options) : base(options)
         {
 
         }
 
-        public DbSet<Profile> Profiles{ get; set; }
+        public DbSet<Profile> Profiles { get; set; }
         public DbSet<UserReview> UserReviews { get; set; }
         public DbSet<CriticReview> CriticReviews { get; set; }
         public DbSet<PersonalDetails> PersonalDetails { get; set; }
@@ -30,6 +30,10 @@ namespace MovieBase.Infrastructure
         public DbSet<Award> Awards { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<Connection> Connections { get; set; }
+        public DbSet<ConnectionPending> ConnectionPendings{get; set;}
+        public DbSet<ResponsePending> ResponsePendings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -65,6 +69,14 @@ namespace MovieBase.Infrastructure
 
             builder.Entity<UserReview>()
                 .HasOne(u => u.Profile);
+
+
+            builder.Entity<ChatMessage>()
+                .HasOne(m => m.Sender)
+                .WithMany(u => u.Messages)
+                .HasForeignKey(m => m.UserId);
+
+         
                 
 
             

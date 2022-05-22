@@ -148,6 +148,22 @@ namespace MovieBase.API.Controllers
             await _blobStorageService.UploadFileContent(file, _blobCotnaienr, fileName);
             return Ok();
         }
+        [HttpGet]
+        [Route("profiles/{search}")]
+        public async Task<IEnumerable<ProfileResponseModel>> GetProfilesBySearch(string search)
+        {
+            var commnad = new GetProfilesBySearchQuery { Search = search };
+            var result = await _mediator.Send(commnad);
+
+            var profileResponseList = new List<ProfileResponseModel>();
+            foreach (var profile in result)
+            {
+                var profileResponse = _mapper.Map<ProfileResponseModel>(profile);
+                profileResponseList.Add(profileResponse);
+            }
+
+            return profileResponseList;
+        }
 
         /*[HttpGet]
         [Route("getProfilePicture")]

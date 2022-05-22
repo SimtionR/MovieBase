@@ -9,7 +9,12 @@ namespace MovieBase.Core.Models
 {
     public class User :IdentityUser
     {
+        public User()
+        {
+            Messages = new HashSet<ChatMessage>();
+        }
         
         public Profile Profile { get; set; }
+        public virtual ICollection<ChatMessage> Messages{ get; set; }
     }
 }

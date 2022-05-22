@@ -64,6 +64,8 @@ namespace MovieBase.Infrastructure.Repositoriers
             return movie;
         }
 
+   
+
         public async Task<Movie> GetMovieByRecommandation(UserPreferences userPreferences, Profile profile)
         {
             userPreferences.CalculateUserPreferances(profile.Ratings);
@@ -95,6 +97,12 @@ namespace MovieBase.Infrastructure.Repositoriers
                 
 
             }
+        }
+
+        public async Task<IEnumerable<Movie>> GetMoviesBySearchAsync(string search)
+        {
+            var movies = await  _ctx.Movies.Where(m => m.Name.Contains(search)).ToListAsync();
+            return movies;
         }
     }
 }

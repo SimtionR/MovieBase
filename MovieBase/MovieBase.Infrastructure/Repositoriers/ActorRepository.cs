@@ -29,6 +29,12 @@ namespace MovieBase.Infrastructure.Repositoriers
            return await _ctx.Actors.Include(a=> a.PersonalDetails).Where(a => a.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<Actor>> GetActorsBySearchAsync(string search)
+        {
+            var actors = await _ctx.Actors.Where(a => (a.FirstName + a.LastName).Contains(search)).ToListAsync();
+            return actors;
+        }
+
         public async Task<ICollection<Actor>> GetAllActorsAsync()
         {
             return await _ctx.Actors.ToListAsync();
