@@ -1,0 +1,15 @@
+img{
+    width: 20%;
+    height: 80%;
+    border-radius: 25%;
+}
+
+.comment{
+    border: 3px solid green;
+    border-radius:5%
+}
+
+.card-img-top:hover {
+    box-shadow: 4px 3px 11px 6px rgb(200 152 44 / 46%);
+    transform: translateY(-3px);
+  }

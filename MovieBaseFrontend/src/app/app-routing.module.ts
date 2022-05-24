@@ -9,18 +9,28 @@ import { KeenSliderComponent } from './keen-slider/keen-slider.component';
 import {MovieDetailsComponent} from './movie-details/movie-details.component';
 import { MovieComponent } from './movie/movie.component';
 import {ProfileComponent} from './profile/profile.component'
+import {CreateReviewComponent} from './create-review/create-review.component';
+import { ChatComponent } from './chat/chat.component';
+import {SearchResultComponent} from './search-result/search-result.component';
+import { ConnectionProfileComponent } from './connection-profile/connection-profile.component';
+import {MyConnectionsComponent} from './my-connections/my-connections.component';
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'search/:show-search', component: HomeComponent},
+  //{path: 'search/:show-search', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'actors', component: ActorsComponent },
   {path: 'movieDetails/:id', component: MovieDetailsComponent},
   {path :'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path: 'movies', component: MovieComponent},
-  {path: 'test', component:KeenSliderComponent}
+  {path: 'test', component:KeenSliderComponent},
+  {path: 'createReview/:id', component:CreateReviewComponent},
+  {path: 'chat', component: ChatComponent},
+  {path: 'search/:search', component: SearchResultComponent},
+  {path: 'connectionProfile/:id', component: ConnectionProfileComponent},
+  {path: 'myConnections/:id', component: MyConnectionsComponent}
 ];
 
 @NgModule({

@@ -15,36 +15,46 @@ export class ProfileService {
 
 
 
-  getProfileByUserId() :Observable<Profile>
+  getProfileByUserId() : Observable<Profile>
   {
 
     return this.http.get<Profile>(this.profilePath + 'userProfile');
   }
 
-  removeMovieFromWatchList(movieId: number) : Observable<boolean>
+  removeMovieFromWatchList(movieId : number) : Observable<boolean>
   {
     return this.http.patch<boolean>(this.profilePath + `removeFromWatchList/${movieId}`, null);
     
   }
 
-  removeFromPlayList(movieId:number) :Observable<boolean>
+  removeFromPlayList(movieId : number) : Observable<boolean>
   {
     return this.http.patch<boolean>(this.profilePath + `removeFromPlayList/${movieId}`, null);
   }
 
-  addToPlayList(movieId:number) : Observable<boolean>
+  addToPlayList(movieId : number) : Observable<boolean>
   {
     return this.http.patch<boolean>(this.profilePath + `addToPlayList/${movieId}`, null);
   }
 
-  addToWatchList(movieId:number) : Observable<boolean>
+  addToWatchList(movieId : number) : Observable<boolean>
   {
     return this.http.patch<boolean>(this.profilePath + `addToWatchList/${movieId}`, null);
   }
 
-  uploadProfilePicture(file: FormData) :Observable<any>
+  uploadProfilePicture(file : FormData) : Observable<any>
   {
     return this.http.post<any>(this.profilePath+'uploadProfile', file);
+  }
+
+  getProfilesBySearch(search : string) : Observable<Array<Profile>>
+  {
+    return this.http.get<Array<Profile>>(this.profilePath + `profiles/${search}`);
+  }
+
+  getProfileByProfileId(profileId : number) : Observable<Profile>
+  {
+    return this.http.get<Profile>(this.profilePath + `profileId/${profileId}`);
   }
 
   

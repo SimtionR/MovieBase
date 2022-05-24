@@ -1,0 +1,47 @@
+<p>Searched Results for movies</p>
+<carousel [cellsToShow]="4" [height]="250"
+  >
+  <ng-container *ngFor ="let movie of movieResults">
+    <div class="carousel-cell">
+      <div class="result-thumb-container" (click)="openMovieDetails(movie.id)">
+        <img
+            src="{{movie?.moviePhoto}}"
+            alt="thumbnail"
+            class="result-image"
+        />     
+    </div>  
+    </div>
+  </ng-container>
+</carousel>
+
+<p>Searched Results for actors</p>
+<carousel [cellsToShow]="4" [height]="250"
+  >
+  <ng-container *ngFor ="let actor of actorResults">
+    <div class="carousel-cell">
+      <div class="result-thumb-container" (click)="openActorDetails(actor.id)">
+        <img
+            src="{{actor.photo}}"
+            alt="thumbnail"
+            class="result-image"
+        />     
+    </div>  
+    </div>
+  </ng-container>
+</carousel>
+
+<p>Searched Results for users</p>
+<carousel [cellsToShow]="4" [height]="250"
+  >
+  <ng-container *ngFor ="let profile of profileResults">
+    <div class="carousel-cell">
+      <div class="result-thumb-container" (click)="openProfileDetails(profile.id)">
+        <img
+            src="{{blob}}{{profile.profilePicture}}"
+            alt="thumbnail"
+            class="result-image"
+        />     
+    </div>  
+    </div>
+  </ng-container>
+</carousel>

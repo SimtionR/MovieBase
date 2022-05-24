@@ -1,0 +1,52 @@
+<div  class="container-fluid"> 
+    <div  class="col-md-6">
+      <div class="card" style="width: 18rem;">
+          <img class="profile-picture" src="{{blob}}">         
+          <div class="card-body">
+            <h5 class="card-title">{{profile?.userName }} </h5>
+            
+            
+            
+        <button mat-button class="menu-button" (click)="addConnection(profile.id)" >
+            <mat-icon>add_circle_outline</mat-icon>
+            <span class="menu-text">Add to connections</span>
+        </button>
+            
+          </div>
+        </div>
+  </div>
+</div>
+
+<p>WatchList</p>
+<carousel [cellsToShow]="4" [height]="250"
+  >
+  <ng-container *ngFor ="let movie of profile?.watctList">
+    <div class="carousel-cell">
+      <div class="movie-thumb-container" (click)="openMovieDetails(movie.id)">
+        <img
+            src="{{movie?.moviePhoto}}"
+            alt="thumbnail"
+            class="movie-image"
+        />     
+    </div>
+    </div>
+  </ng-container>
+  
+</carousel>
+
+
+<p>Watched Movies</p>
+<carousel [cellsToShow]="4" [height]="250">
+  <ng-container *ngFor ="let movie of profile?.playList">
+    <div class="carousel-cell" >
+      <div class="movie-thumb-container"(click)="openMovieDetails(movie.id)">
+        <img
+            src="{{movie?.moviePhoto}}"
+            alt="thumbnail"
+            class="movie-image"
+        />
+        
+    </div>
+    </div>
+  </ng-container>
+</carousel>

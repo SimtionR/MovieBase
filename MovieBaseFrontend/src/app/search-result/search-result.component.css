@@ -1,0 +1,23 @@
+.result-thumb-container{
+    background-color: #000;
+    position:relative;
+    height: 200px;
+    color: #fff;
+    text-align: center;
+}
+
+
+.result-image{
+
+    height: 50%;    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+   
+ }
+
+ .result-image:hover{
+    box-shadow: 4px 3px 11px 6px rgb(200 152 44 / 46%);
+    transform: translateY(-3px);
+ }

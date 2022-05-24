@@ -1,0 +1,24 @@
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-g-4">
+        <form [formGroup]="reviewForm" (ngSubmit)="create()">
+          <div class="form-group">
+            <label for="title">Title:</label>
+            <textarea class="form-control" id="title" rows="1" formControlName="Title"></textarea>
+            
+            <label for="RewiewContent">Review:</label>
+            <textarea class="form-control" id="RewiewContent" rows="3" formControlName="RewiewContent"></textarea>
+              <!-- <div  *ngIf="CommentBody?.touched && CommentBody?.errors?.required" class="alert alert-danger">
+                      This filed is required!
+                    </div> -->
+                    <label for="Rating">Rating: </label>
+                    <input type="number" min="1" max="10" formControlName="Rating" onKeyDown="return false" >   
+                    
+                  </div>
+                  <button type="submit"  class="btn btn-primary">Send Review</button>
+        
+        </form>
+      </div>
+    </div>
+  </div>

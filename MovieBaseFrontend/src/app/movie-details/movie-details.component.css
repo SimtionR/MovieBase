@@ -222,11 +222,16 @@
         margin-left: 7%;
     }
     
+    .reivew-div{
+        margin: auto;
+        width: 50%;
+        border: 3px solid green;
+        padding: 10px;
+    }
     
-    
-    /* .movie-description{
-        color: #fff;
-    } */
+   .create-review{
+       margin-left:20%
+   }
     
     
     

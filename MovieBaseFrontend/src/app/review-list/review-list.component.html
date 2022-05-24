@@ -1,0 +1,30 @@
+
+<div class="container-fluid">         
+    <div class="row">  
+        <div class="col-md-4 offset-md-4 mt-5 " *ngFor="let review of userReviews">
+            <div class="comment">
+                <img [src]="blob+review.profile.profilePicture" class="card-img-top" alt="..." (click)="openProfileDetails(review.profileId)">
+            {{review.profile.userName}} 
+        <div class=" col-md-8" >
+            <p>Title:{{review.title}}</p>
+            <p>Rating: {{review.rating}} out of 10</p>
+            <p>Posted On:{{review.commentDate | date:'short'}}  </p>
+            <div class="card-text ">
+                {{review?.rewiewContent}} 
+                
+            </div>
+        </div>
+        <button mat-button class="reaction-button" >
+            <mat-icon>thumb_up</mat-icon>
+            <span class="menu-text"> 0</span>
+        </button>
+        <button mat-button class="reaction-button" >
+            <mat-icon>thumb_down</mat-icon>
+            <span class="menu-text"> 0</span>
+        </button>
+            
+        
+            
+      
+    </div>
+</div>

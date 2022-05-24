@@ -57,6 +57,8 @@ mat-divider{
     
     border-radius: 25%;
     margin-bottom: 5px;
+    max-width: 150px;
+    max-height: 150px;
 }
 
 .search-form{

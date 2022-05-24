@@ -1,12 +1,13 @@
-<div  class="container-fluid">
-  <!-- <div style="float:left" class="row"> -->
+<div  class="container-fluid"> 
     <div  class="col-md-6">
       <div class="card" style="width: 18rem;">
-          <img class="profile-picture" src="{{blob}}">
-          <!-- [src]="profile?.pictureName" class="card-img-top" alt="..."> -->
+        <div class="profile-thumb-container" >
+          <img class="profile-picture" src="{{blob}}">         
+        </div>
+         
           <div class="card-body">
             <h5 class="card-title">{{profile?.userName }} </h5>
-            <!-- <a (click)="viewPosts()" class="btn btn-primary">View posts</a> -->
+            
             
           </div>
         </div>
@@ -27,8 +28,18 @@
       <button type="submit"
               class="btn btn-primary">Update<i class="fas fa-user-edit"></i></button>
     </form>
+    
+ 
+        <button mat-button class="menu-button" >
+            <mat-icon>edit</mat-icon>
+            <span class="menu-text">Edit Personal Data</span>
+        </button>
+        <button mat-button class="menu-button" (click) ="openMyConnections(profile.id)" >
+            <mat-icon>people_outline</mat-icon>
+            <span class="menu-text">See your connections</span>
+        </button>
   </div>
-  <!-- </div> -->
+
     
    <div class="row">
     

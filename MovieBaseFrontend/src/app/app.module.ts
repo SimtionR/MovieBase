@@ -28,6 +28,12 @@ import { SharedModule } from '../shared/shared.module';
 import { ProfileComponent } from './profile/profile.component'
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { ReviewListComponent } from './review-list/review-list.component';
+import { CreateReviewComponent } from './create-review/create-review.component';
+import { ChatComponent } from './chat/chat.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { ConnectionProfileComponent } from './connection-profile/connection-profile.component';
+import { MyConnectionsComponent } from './my-connections/my-connections.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +45,12 @@ import { NgImageSliderModule } from 'ng-image-slider';
     ActorsComponent,
     MovieDetailsComponent,
     ProfileComponent,
+    ReviewListComponent,
+    CreateReviewComponent,
+    ChatComponent,
+    SearchResultComponent,
+    ConnectionProfileComponent,
+    MyConnectionsComponent,
  
   ],
   imports: [

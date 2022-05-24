@@ -70,7 +70,20 @@
                 </div>
             </div>        
         </div>
+        
     </ng-container>
+    
+
+    
       
  
 </div>
+<div class="reivew-div">
+    <button mat-button class="create-review" (click) ="navigateToCreateComment(movie?.id)" >
+        <mat-icon>create</mat-icon>
+        <span class="review">Tell us your opionion on the movie! Don't forget to mark spoiler alert if needed</span>
+    </button>
+</div>
+<app-review-list></app-review-list>
+
+

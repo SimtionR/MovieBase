@@ -1,0 +1,87 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="connections">My Connections
+                <ng-container *ngFor="let connection of connections">
+                    <div class="wrapper">
+                        <div class="sender">{{connection.profileUserName}}</div>
+
+                        <div class="connection-thumb-container" >
+                            <img [src]="blob+connection.profilePicture" class="card-img-top" alt="thumbnail"
+                            (click)="openProfile(connection.profileConnectionId)">
+                        </div>  
+                        
+                        
+                    </div>
+                    <button mat-button class="connetion-button" (click)="deleteConnection(connection.id)" >
+                        <mat-icon>remove_circle_outline</mat-icon>
+                        <span class="menu-text">Remove Connection</span>
+                    </button>
+                </ng-container>
+            </div>
+           
+        </div>
+        <div class="col-sm">
+            <div class="connections-requests"> Requests 
+                <ng-container *ngFor="let connectionRequest of connectionPendings">
+                    <div class="wrapper">
+                        <div class="sender">You have a request from: {{connectionRequest.senderName}}</div>
+                        
+
+                        <div class="connection-thumb-container" >
+                            <img [src]="blob+connectionRequest.senderPhoto" class="card-img-top" alt="thumbnail"
+                        (click)="openProfile(connectionRequest.senderId)">
+                        </div>                                 
+
+                        
+                        <button mat-button class="connetion-button"
+                         (click)="acceptRequest(connectionRequest?.id,
+                                                connectionRequest?.senderId,
+                                                connectionRequest?.senderName, 
+                                                connectionRequest?.senderPhoto)" >
+
+                            <mat-icon>sentiment_very_satisfied</mat-icon>
+                            <span class="menu-text">Accept request</span>
+                        </button>
+                        <button mat-button class="connetion-button" 
+                        (click)="declineRequest(connectionRequest?.id,
+                                               connectionRequest?.senderId,
+                                               connectionRequest?.senderName, 
+                                               connectionRequest?.senderPhoto)"  >
+                            <mat-icon>sentiment_very_dissatisfied</mat-icon>
+                            <span class="menu-text">Decline request</span>
+                        </button>
+                    </div>
+                
+                </ng-container>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="connections-accepted"> Responded requests
+                <ng-container *ngFor="let response of responsePendings">
+                    <div class="wrapper">
+                        <div class="sender" *ngIf="response.isAccepted; else rejectedRequest">
+                            {{acceptedRequest}}  {{response.senderName}}
+                        </div>
+                        
+                        <ng-template #rejectedRequest>
+                            {{declinedRequest}}  {{response.senderName}}
+                            <br>
+                        </ng-template>
+
+                        <div class="connection-thumb-container">
+                            <img [src]="blob +response.senderPhoto" class="card-img-top" alt="thumbnail"
+                         (click)="openProfile(response.senderId)">
+                        </div>  
+                        
+                        
+                         
+                    </div>
+                
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    
+</div>

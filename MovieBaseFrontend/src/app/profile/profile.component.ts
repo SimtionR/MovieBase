@@ -55,10 +55,12 @@ export class ProfileComponent implements OnInit {
 
     formData.append('Name', this.selectedPhoto.name);
     formData.append('File', this.selectedPhoto);
-    this.profileSerice.uploadProfilePicture(formData).subscribe(res =>
+    this.profileSerice.uploadProfilePicture(formData).subscribe(c =>
       {
-        console.log(res);
+        window.location.replace(window.location.href);
       });
+
+    
   }
    
   openMovieDetails(id: number)
@@ -110,6 +112,11 @@ export class ProfileComponent implements OnInit {
         
       })
      
+  }
+
+  openMyConnections(id:any)
+  {
+    this.router.navigate([`myConnections/${id}`]);
   }
 
 

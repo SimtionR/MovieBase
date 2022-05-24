@@ -29,14 +29,61 @@ export interface MovieDetails{
 
 export interface Profile{
     id:number;
+    userId:string;
     userName:string;
     profilePicture:string;
     watctList:Movie[];
     playList:Movie[];
 }
 
-export interface File{
-    
+export interface UserReview{
+    id:number;
+    profileId:number;
+    profile:Profile;
+    title:string;
+    rewiewContent:string;
+    commentDate:Date;
+    rating:number;
+    movieId:number;
+}
+
+export interface ConnectionPending{
+    id: number;
+    senderId: number;
+    senderName: string;
+    senderPhoto: string;
+    receiverId: number;
+}
+
+export interface Connection{
+    id: number,
+    profileConnectionId: number,
+    profileUserName: string,
+    profilePicture: string
+}
+
+export interface ResponsePending
+{
+    id: number;
+    pendingId: number;
+    senderId: number;
+    senderName: string;
+    senderPhoto: string;
+    receiverId: number;
+    receiverName: string;
+    receiverPhoto: string;
+    isAccepted: boolean;
+}
+
+export interface ResponsePendingRequest
+{
+    pendingId: number;
+    senderId: number;
+    senderName: string;
+    senderPhoto: string;
+    receiverId: number;
+    receiverName: string;
+    receiverPhoto: string;
 }
 
 export interface Genres{

@@ -29,16 +29,23 @@ export class MovieService {
   //   });
   // }
 
-  getMovies() :Observable<Array<Movie>>
+  getMovies() : Observable<Array<Movie>>
   {
-    return this.http.get<Array<Movie>>(this.moviePath +'movies');
+    return this.http.get<Array<Movie>>(this.moviePath + 'movies');
   }
-  getMovie(id:number):Observable<Movie>
+
+  getMovie(id:number) : Observable<Movie>
   {
-    return this.http.get<Movie>(this.moviePath+`movieId/${id}`);
+    return this.http.get<Movie>(this.moviePath + `movieId/${id}`);
   }
-  getMovieDetails(id:number):Observable<MovieDetails>
+
+  getMovieDetails(id:number) : Observable<MovieDetails>
   {
-    return this.http.get<MovieDetails>(this.movieDetailsPath+`movieDetails/${id}`);
+    return this.http.get<MovieDetails>(this.movieDetailsPath + `movieDetails/${id}`);
+  }
+
+  getMoviesBySearch(search:string) : Observable<Array<Movie>>
+  {
+    return this.http.get<Array<Movie>>(this.moviePath + `movieSearch/${search}`);
   }
 }

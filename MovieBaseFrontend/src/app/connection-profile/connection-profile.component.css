@@ -1,0 +1,32 @@
+
+.profile-picture
+{
+    max-height: 150px;
+    max-width: 150px;
+    width: 100%;
+    border-radius: 25%;
+    margin-bottom: 5px;
+}
+
+
+.container-fluid{
+    height: 120px;
+    width: 800px;
+    margin-left: 5%;
+    margin-bottom: 7%;
+    
+    padding: 10px;
+
+}
+
+.card{
+    background-color: #000;
+    max-width: 150px;
+    float: left;
+    height: 20px;
+}
+
+.movie-thumb-container:hover {
+    box-shadow: 4px 3px 11px 6px rgb(200 152 44 / 46%);
+    transform: translateY(-3px);
+  }

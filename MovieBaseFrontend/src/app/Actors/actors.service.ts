@@ -9,19 +9,25 @@ import { Actor } from '../services/models';
 })
 export class ActorsService {
 
-  private allActorsPath = environment.apiUrl+ 'Actor/getActors'
-  private actorPath = environment.apiUrl+ 'Actor/acotrId/';
+  private actorPath = environment.apiUrl +'Actor/';
+  //private allActorsPath = environment.apiUrl+ 'Actor/getActors'
+  //private actorPath = environment.apiUrl+ 'Actor/acotrId/';
   private testActors = Array<Actor>();
 
   constructor(private http: HttpClient) { }
 
 
   getActors() :Observable<Array<Actor>>{
-    return this.http.get<Array<Actor>>(this.allActorsPath);
+    return this.http.get<Array<Actor>>(this.actorPath + 'getActors');
   }
 
-  getActor(actorId:number): Observable<Actor>{
-    return this.http.get<Actor>(this.actorPath+ `${actorId}`);
+  getActor(actorId : number) : Observable<Actor>{
+    return this.http.get<Actor>(this.actorPath+ `actorId/${actorId}`);
+  }
+
+  getActorsBySearch(search : string) : Observable<Array<Actor>>
+  {
+    return this.http.get<Array<Actor>>(this.actorPath + `actors/${search}`);
   }
 
   // getActorsFromMovie(actorsId: Array<number>) : Observable<Array<Actor>>{

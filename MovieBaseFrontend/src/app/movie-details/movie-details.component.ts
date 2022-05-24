@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileService } from '../profile/profile.service';
 import { Movie, MovieDetails } from '../services/models';
@@ -20,7 +20,8 @@ export class MovieDetailsComponent implements OnInit {
   constructor(private movieService: MovieService,
               private activatedRoute: ActivatedRoute,
               private profileService: ProfileService,
-              private toastrService: ToastrService) { }
+              private toastrService: ToastrService,
+              private router:Router) { }
 
   ngOnInit(): void {
     this.movieId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -90,6 +91,12 @@ export class MovieDetailsComponent implements OnInit {
       }
     );
     this.ngOnInit();
+  }
+
+
+  navigateToCreateComment(movieId: any)
+  {
+    this.router.navigate([`/createReview/${movieId}`]);
   }
 
 }
