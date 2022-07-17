@@ -34,6 +34,10 @@ import { ChatComponent } from './chat/chat.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { ConnectionProfileComponent } from './connection-profile/connection-profile.component';
 import { MyConnectionsComponent } from './my-connections/my-connections.component';
+import { AdminloginComponent } from './Identity/adminlogin/adminlogin.component';
+import { CriticloginComponent } from './Identity/criticlogin/criticlogin.component';
+import { CreateCriticReviewComponent } from './create-critic-review/create-critic-review.component';
+import { CriticsReviewComponent } from './critics-review/critics-review.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +55,10 @@ import { MyConnectionsComponent } from './my-connections/my-connections.componen
     SearchResultComponent,
     ConnectionProfileComponent,
     MyConnectionsComponent,
+    AdminloginComponent,
+    CriticloginComponent,
+    CreateCriticReviewComponent,
+    CriticsReviewComponent,
  
   ],
   imports: [

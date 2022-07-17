@@ -1,1 +1,23 @@
-<p>chat works!</p>
+<div class="ud-header">
+    <h2 class="text-center">Public chat</h2>
+    <div>
+        <div class="ud-body">
+            <div class="msg-box">
+                <ul>
+                    <li *ngFor="let  mObj of messageArray"
+                    [ngClass]="mObj.user === message.user ? 'in-msg' : 'ex-msg'">{{mObj.user}}: <br />
+                    <span class="msg-italic-style">{{mObj?.text}}</span> </li>
+                    
+                </ul>
+            </div>
+            <div class="ud-flex-row">
+                <input type="text" placeholder="Type message here" class="msg-input" 
+                [(ngModel)] = "message.text" />
+                <button class="send-btn" (click)="send()">Send<i class="fa-papaer-plane"></i></button>
+            </div>
+            
+            <input type="hidden" placeholder="Your name" class="name-box" value="profile?.userName" [(ngModel)] ="message.user"  />
+            
+            
+        </div>
+    </div>

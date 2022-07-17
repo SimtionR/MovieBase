@@ -1,20 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserReview } from '../services/models';
+import { CriticReview, UserReview } from '../services/models';
 import {ReviewsService} from '../services/reviews.service';
 import {ReactionService} from '../services/reaction.service';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
-  selector: 'app-review-list',
-  templateUrl: './review-list.component.html',
-  styleUrls: ['./review-list.component.css']
+  selector: 'app-critics-review',
+  templateUrl: './critics-review.component.html',
+  styleUrls: ['./critics-review.component.css']
 })
-export class ReviewListComponent implements OnInit {
-  
-  userReviews: Array<UserReview> =[];
+export class CriticsReviewComponent implements OnInit {
+
+  criticReviews: Array<CriticReview> =[];
   movieId:number;
-  blob : string ="https://blobmoviebase.blob.core.windows.net/profilepictures/";
+  //blob : string ="https://blobmoviebase.blob.core.windows.net/profilepictures/";
 
   constructor(private reviewsSerivce: ReviewsService,
               private route: ActivatedRoute,
@@ -26,8 +27,8 @@ export class ReviewListComponent implements OnInit {
       console.log(this.movieId);
     })
 
-    this.reviewsSerivce.getReviewsByMovieId(this.movieId).subscribe(res =>{
-      this.userReviews = res;
+    this.reviewsSerivce.getCriticsReview(this.movieId).subscribe(res =>{
+      this.criticReviews = res;
       console.log(res);
     })
   }
@@ -36,9 +37,9 @@ export class ReviewListComponent implements OnInit {
   }
 
   getReviewsByMovie(movieId: number){
-    this.reviewsSerivce.getReviewsByMovieId(movieId).subscribe(result => {
-      this.userReviews = result;
-      console.log(this.userReviews);
+    this.reviewsSerivce.getCriticsReview(movieId).subscribe(result => {
+      this.criticReviews = result;
+      console.log(this.criticReviews);
     })
   }
 
@@ -63,17 +64,5 @@ export class ReviewListComponent implements OnInit {
       window.location.replace(window.location.href);
     })
   }
-
-   delete(reviewId : number)
-  {
-    
-    this.reviewsSerivce.deleteReview(reviewId).subscribe(result => {
-
-        this.toastr.success("Deleted review");
-        window.location.replace(window.location.href);
-
-    })
-  }
-
 
 }

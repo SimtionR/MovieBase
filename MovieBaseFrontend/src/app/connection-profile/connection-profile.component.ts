@@ -35,6 +35,10 @@ export class ConnectionProfileComponent implements OnInit {
   openMovieDetails(id: number)
   {
     this.router.navigate(['movieDetails/', id]);
+  }
+  openChat()
+  {
+    this.router.navigate(['chat']);
   } 
 
   addConnection(receiverId: number)

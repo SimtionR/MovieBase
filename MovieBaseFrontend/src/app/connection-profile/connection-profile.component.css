@@ -24,9 +24,11 @@
     max-width: 150px;
     float: left;
     height: 20px;
+    
 }
 
 .movie-thumb-container:hover {
     box-shadow: 4px 3px 11px 6px rgb(200 152 44 / 46%);
     transform: translateY(-3px);
   }
+  

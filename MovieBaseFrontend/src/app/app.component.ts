@@ -60,5 +60,10 @@ export class AppComponent implements OnInit {
   {
     this.router.navigate(['/']);
   }
+  openChat()
+  {
+    this.router.navigate(['chat']);
+  } 
+
   
 }

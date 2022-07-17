@@ -93,6 +93,11 @@ export class MovieDetailsComponent implements OnInit {
     this.ngOnInit();
   }
 
+  seeCriticsReview(movieId: any)
+  {
+    this.router.navigate([`/critics-review/${movieId}`]);
+  }
+
 
   navigateToCreateComment(movieId: any)
   {

@@ -5,11 +5,11 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-create-review',
-  templateUrl: './create-review.component.html',
-  styleUrls: ['./create-review.component.css']
+  selector: 'app-create-critic-review',
+  templateUrl: './create-critic-review.component.html',
+  styleUrls: ['./create-critic-review.component.css']
 })
-export class CreateReviewComponent implements OnInit {
+export class CreateCriticReviewComponent implements OnInit {
 
   reviewForm: FormGroup
   ratingControl: any;
@@ -30,6 +30,7 @@ export class CreateReviewComponent implements OnInit {
                 this.reviewForm = this.fb.group({
                   "Title":['',Validators.nullValidator],
                   "RewiewContent":['',Validators.nullValidator],
+                  "CompanyName":['', Validators.nullValidator],
                   "Rating":['',Validators.nullValidator],
                    
                 },
@@ -44,8 +45,8 @@ export class CreateReviewComponent implements OnInit {
 
 
   create(){
-    this.reviewsService.postReview(this.reviewForm.value, this.movieId).subscribe(res =>{
-        this.toastrService.success("Comment posted!");
+    this.reviewsService.postCriticReview(this.reviewForm.value, this.movieId).subscribe(res =>{
+        this.toastrService.success("Review posted!");
         this.redirect()
        
     })

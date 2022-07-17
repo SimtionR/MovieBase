@@ -41,10 +41,25 @@ export interface UserReview{
     profileId:number;
     profile:Profile;
     title:string;
+    numberOfLikes: number;
+    numberOfDislikes: number;
     rewiewContent:string;
     commentDate:Date;
     rating:number;
     movieId:number;
+}
+
+export interface CriticReview{
+    id:number,
+    companyName: string,
+    criticId: string,
+    title: string,
+    movieId : number,
+    reviewContent: string,
+    commentDate:Date,
+    rating: number,
+    numberOfLikes: number;
+    numberOfDislikes: number;
 }
 
 export interface ConnectionPending{
@@ -60,6 +75,15 @@ export interface Connection{
     profileConnectionId: number,
     profileUserName: string,
     profilePicture: string
+}
+
+export interface Reaction{
+    id: number;
+    reviewId: number;
+    profileId: number;
+    profile: Profile;
+    isLiked: boolean;
+    isDisliked: boolean;
 }
 
 export interface ResponsePending
@@ -84,6 +108,11 @@ export interface ResponsePendingRequest
     receiverId: number;
     receiverName: string;
     receiverPhoto: string;
+}
+
+export class Message{
+    user: string;
+    text: string;
 }
 
 export interface Genres{

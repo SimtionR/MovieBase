@@ -3,7 +3,9 @@
       <div class="card" style="width: 18rem;">
           <img class="profile-picture" src="{{blob}}">         
           <div class="card-body">
+            
             <h5 class="card-title">{{profile?.userName }} </h5>
+            
             
             
             
@@ -11,9 +13,16 @@
             <mat-icon>add_circle_outline</mat-icon>
             <span class="menu-text">Add to connections</span>
         </button>
+        
             
           </div>
         </div>
+  </div>
+  <div class="col-md-6">
+    <button mat-button class="menu-button" (click)="openChat()" >
+      <mat-icon>chat</mat-icon>
+      <span class="menu-text">Send Message</span>
+  </button>
   </div>
 </div>
 

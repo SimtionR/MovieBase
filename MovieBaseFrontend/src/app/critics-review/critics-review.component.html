@@ -1,16 +1,17 @@
 
 <div class="container-fluid">         
     <div class="row">  
-        <div class="col-md-4 offset-md-4 mt-5 " *ngFor="let review of userReviews">
+        <div class="col-md-4 offset-md-4 mt-5 " *ngFor="let review of criticReviews">
             <div class="comment">
-                <img [src]="blob+review.profile.profilePicture" class="card-img-top" alt="..." (click)="openProfileDetails(review.profileId)">
-            {{review.profile.userName}} 
+                <!-- <img [src]="blob+review.profile.profilePicture" class="card-img-top" alt="..." (click)="openProfileDetails(review.profileId)"> -->
+            
         <div class=" col-md-8" >
+            <p>Company Name: {{review.companyName}}</p>
             <p>Title:{{review.title}}</p>
             <p>Rating: {{review.rating}} out of 10</p>
             <p>Posted On:{{review.commentDate | date:'short'}}  </p>
             <div class="card-text ">
-                {{review?.rewiewContent}} 
+                {{review?.reviewContent}} 
                 
             </div>
         </div>
@@ -23,10 +24,10 @@
             <span class="menu-text"> {{review?.numberOfDislikes}}</span>
         </button>
 
-        <button mat-button class="reaction-button" (click) = "delete(review.id)">
+        <!-- <button mat-button class="reaction-button" (click) = "delete(review.id)">
             <mat-icon>delete</mat-icon>
             <span class="menu-text"> Delete</span>
-        </button>
+        </button> -->
             
         
             
